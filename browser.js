@@ -192,4 +192,153 @@ const marketData  =async (batchId,url) => {
 };
 
 
-fetchMarketData()
+async function fetchSkinData() {
+  const batchId = Date.now();
+  await tables.skins_batch.insert({
+    id: batchId,
+    startTime: Date.now(),
+    endTime: 0,
+    status: 0
+  });
+
+  for (let i of cases) {
+    await runWithTimeout(() => casesData(batchId, i.url), 120000, i.url);
+    await sleep(120000);
+  }
+
+  await tables.skins_batch.update(
+    { id: batchId },
+    { $set: { endTime: Date.now(), status: 1 } },
+    { multi: false }
+  );
+}
+let finalDataCases = {}
+const casesData  =async (batchId,url) => {
+  finalDataCases = {};
+  const browser = await puppeteer.launch({
+    executablePath: chromePath,          // 真实 Chrome 路径
+    headless: false,                     // 非 headless
+    defaultViewport: null,               // 使用完整窗口
+    userDataDir: "./chrome_profile",     // ★ 持久化用户目录（关键）
+
+    args: [
+      "--start-maximized",
+
+      // ====== 保留 Chrome 所有缓存（默认 Puppeteer 会改 flags）======
+      "--disk-cache-dir=./chrome_cache",  // ★ 指定磁盘缓存路径
+      "--disk-cache-size=0",              // ★ 0 = 不限制缓存大小
+      "--media-cache-size=0",
+      "--aggressive-cache-discard",       // 根据需要可删
+      "--disable-background-networking",  // 可选，减少干扰
+
+      // ====== 让浏览器表现更真实 ======
+      "--no-default-browser-check",
+      "--no-first-run",
+      "--disable-infobars",
+      "--lang=zh-CN,zh",
+
+      // ====== 如果你希望规避沙盒 ======
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+
+      // ====== 字体和渲染调整 ======
+      "--font-render-hinting=none",
+
+      // ====== 多进程优化 ======
+      "--disable-dev-shm-usage",
+      "--ignore-gpu-blocklist",
+      "--enable-gpu-rasterization",
+      "--enable-features=NetworkService"
+    ]
+  });
+  const page = await browser.newPage();
+  await page.setExtraHTTPHeaders({
+    'Accept-Language': 'zh-CN,zh;q=0.9'
+    });
+  await page.setViewport({
+        width: 1080,
+        height: 720,
+  });
+  await page.goto(url, { waitUntil: "load" });
+  await sleep(20000)
+
+  const data = await page.evaluate(() => {
+
+  // K/M/B 解析函数
+  function parseKM(numStr) {
+    numStr = numStr.trim();
+
+    // 去除逗号
+    numStr = numStr.replace(/,/g, '');
+
+    if (/^\d+(\.\d+)?$/.test(numStr)) {
+      return parseFloat(numStr);
+    }
+
+    const match = numStr.match(/^([\d\.]+)\s*([KMB])$/i);
+    if (!match) return null;
+
+    const value = parseFloat(match[1]);
+    const unit = match[2].toUpperCase();
+
+    const multipliers = {
+      K: 1000,
+      M: 1000 * 1000,
+      B: 1000 * 1000 * 1000
+    };
+
+    return value * multipliers[unit];
+  }
+
+  const results = [];
+
+  // 获取所有 active offers 区块
+  const offerBlocks = Array.from(document.querySelectorAll('div'))
+    .filter(el => /active offers/i.test(el.textContent));
+
+  offerBlocks.forEach(block => {
+    // 交易所名称
+    const nameEl = block.querySelector('a') || block.querySelector('strong') || block;
+    const name = nameEl ? nameEl.textContent.trim() : null;
+
+    // 获取 price：from $14.72
+    const priceMatch = block.textContent.match(/from\s*\$([\d,]+(\.\d+)?)/i);
+    const price = priceMatch ?
+      parseFloat(priceMatch[1].replace(/,/g, '')) :
+      null;
+
+    // 获取 active offers：6K, 12, 3.2M, 850
+    const offersMatch = block.textContent.match(/active offers\s*([\d\.KMB,]+)/i);
+
+    let active_offers = null;
+    if (offersMatch && offersMatch[1]) {
+      active_offers = parseKM(offersMatch[1]);
+    }
+
+    if (name && price != null && active_offers != null) {
+      results.push({
+        name,
+        price,
+        active_offers
+      });
+    }
+  });
+  return results;
+  });
+  finalDataCases['data'] = data;
+  finalDataCases['id'] = batchId;
+  finalDataCases['timestamp'] = Date.now()
+  await tables.skins.insert(finalDataCases);
+  await sleep(10000)
+  try{
+    await browser.close()
+    return 0;
+  }catch(e)
+  {
+    console.err("close error :",e)
+    return 0;
+  }
+};
+
+// fetchMarketData()
+fetchSkinData()

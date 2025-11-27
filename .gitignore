@@ -1,0 +1,4 @@
+/chrome_profile/
+/node_modules/
+
+.env

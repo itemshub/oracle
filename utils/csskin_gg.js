@@ -1,6 +1,7 @@
 const path = require('path');
 //Chrome
 const puppeteer = require("puppeteer-core");
+const { MongoTable } = require('../db/db');
 const tables = {
     skins: new MongoTable("skins"),
     skins_batch: new MongoTable("skins_batch"),
@@ -8,7 +9,7 @@ const tables = {
     markets_batch: new MongoTable("markets_batch"),
 };
 const cases = require("../config/case.json")
-const markets = require("../config/market.json")
+const markets = require("../config/market.json");
 
 const chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 function sleep(ms) {
@@ -334,3 +335,7 @@ const casesData  =async (batchId,skin,url) => {
 
 // fetchMarketData()
 // fetchSkinData()
+module.exports = {
+  fetchMarketData,
+  fetchSkinData
+}

@@ -9,6 +9,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.1.2",
     "express": "^5.1.0",
+    "mongodb": "^7.0.0",
     "puppeteer-core": "^24.22.3",
     "serve-static": "^2.2.0"
   },

@@ -1,22 +1,14 @@
 const path = require('path');
 //Chrome
 const puppeteer = require("puppeteer-core");
-const Datastore = require('@seald-io/nedb')
-const db_base = "./db/"
-const dbs = {
-    skins : db_base+"skins",
-    skins_batch : db_base+"skins_batch",
-    markets : db_base+"markets",
-    markets_batch : db_base+"markets_batch",
-}
 const tables = {
-    skins:new Datastore({ filename: dbs.skins, autoload: true }),
-    skins_batch:new Datastore({ filename: dbs.skins_batch, autoload: true }),
-    markets:new Datastore({ filename: dbs.markets, autoload: true }),
-    markets_batch:new Datastore({ filename: dbs.markets_batch, autoload: true }),
-}
-const cases = require("./config/case.json")
-const markets = require("./config/market.json")
+    skins: new MongoTable("skins"),
+    skins_batch: new MongoTable("skins_batch"),
+    markets: new MongoTable("markets"),
+    markets_batch: new MongoTable("markets_batch"),
+};
+const cases = require("../config/case.json")
+const markets = require("../config/market.json")
 
 const chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 function sleep(ms) {
@@ -26,7 +18,6 @@ function sleep(ms) {
 let logIndex =0
 const screenShotLog = async (page) =>
 {
-  // await page.screenshot({ path: `./screenshot/test${logIndex}.png`, fullPage: false });
   logIndex++;
 }
 
@@ -202,7 +193,7 @@ async function fetchSkinData() {
   });
 
   for (let i of cases) {
-    await runWithTimeout(() => casesData(batchId, i.url), 120000, i.url);
+    await runWithTimeout(() => casesData(batchId,i.id, i.url), 120000, i.url);
     await sleep(120000);
   }
 
@@ -213,7 +204,7 @@ async function fetchSkinData() {
   );
 }
 let finalDataCases = {}
-const casesData  =async (batchId,url) => {
+const casesData  =async (batchId,skin,url) => {
   finalDataCases = {};
   const browser = await puppeteer.launch({
     executablePath: chromePath,          // 真实 Chrome 路径
@@ -325,6 +316,7 @@ const casesData  =async (batchId,url) => {
   });
   return results;
   });
+  finalDataCases['skin'] = skin;
   finalDataCases['data'] = data;
   finalDataCases['id'] = batchId;
   finalDataCases['timestamp'] = Date.now()
@@ -341,4 +333,4 @@ const casesData  =async (batchId,url) => {
 };
 
 // fetchMarketData()
-fetchSkinData()
+// fetchSkinData()

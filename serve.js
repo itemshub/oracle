@@ -8,5 +8,55 @@ const tables = {
     markets: new MongoTable("markets"),
     markets_batch: new MongoTable("markets_batch"),
 };
-const cases = require("./config/case.json")
-const markets = require("./config/market.json")
+const express = require('express');
+var bodyParser = require('body-parser');
+var querystring = require('querystring');
+const { getLatestMarketData, getLatestSkinData } = require('./controller');
+const app = express();
+const PORT = 7749;
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send('Server Error');
+});
+
+
+async function sendSuccess(res, data) {
+    if (!data) {
+        data = "success"
+    }
+    return await res.status(200).send({
+        "code": 200,
+        "data": data
+    })
+}
+
+async function sendErr(res, err) {
+    if (!err) {
+        err = "unknow error"
+    }
+    return await res.status(500).send({
+        "code": 500,
+        "error": err
+    })
+}
+
+
+app.get('/ping', async function(req, res) {
+    return sendSuccess(res)
+})
+
+app.get('/market/lts', async function(req, res) {
+  const datas = await getLatestMarketData();
+  return sendSuccess(res, datas);
+});
+
+app.get('/skin/lts', async function(req, res) {
+  const datas = await getLatestSkinData();
+  return sendSuccess(res, datas);
+});
+
+app.listen(PORT, () => {
+  console.log(`🚀 API RUN NOW: http://localhost:${PORT}`);
+});

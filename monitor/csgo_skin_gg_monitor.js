@@ -12,10 +12,10 @@ const init = async ()=>
 const loope = async ()=>
 {
     try{
-        await csskin_gg.fetchMarketData();
-        await sleep(300000)
+        // await csskin_gg.fetchMarketData();
+        // await sleep(3600000)
         await csskin_gg.fetchSkinData();
-        await sleep(300000)
+        await sleep(3600000)
     }catch(e)
     {
         console.error(e)

@@ -14,6 +14,8 @@ var querystring = require('querystring');
 const { getLatestMarketData, getLatestSkinData } = require('./controller');
 const app = express();
 const PORT = 7749;
+const cases = require("./config/case.json")
+const markets = require("./config/market.json");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use((err, req, res, next) => {
@@ -46,6 +48,11 @@ async function sendErr(res, err) {
 app.get('/ping', async function(req, res) {
     return sendSuccess(res)
 })
+
+app.get('/case', async function(req, res) {
+  return sendSuccess(res, cases);
+});
+
 
 app.get('/market/lts', async function(req, res) {
   const datas = await getLatestMarketData();

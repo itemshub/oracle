@@ -254,74 +254,105 @@ const casesData  =async (batchId,skin,url) => {
   await page.goto(url, { waitUntil: "load" });
   await sleep(20000)
 
-  const data = await page.evaluate(() => {
-
-  // K/M/B 解析函数
-  function parseKM(numStr) {
-    numStr = numStr.trim();
-
-    // 去除逗号
-    numStr = numStr.replace(/,/g, '');
-
-    if (/^\d+(\.\d+)?$/.test(numStr)) {
-      return parseFloat(numStr);
+  const _data = await page.evaluate(() => {
+    function text(el) {
+        return el ? el.textContent.replace(/\s+/g, " ").trim() : "";
     }
 
-    const match = numStr.match(/^([\d\.]+)\s*([KMB])$/i);
-    if (!match) return null;
+    // 通用单位转换（支持 K / M / B）
+    function parseUnitNumber(str) {
+        if (!str) return "";
 
-    const value = parseFloat(match[1]);
-    const unit = match[2].toUpperCase();
+        const match = str.match(/([\d.,]+)\s*([KMB])?/i);
+        if (!match) return "";
 
-    const multipliers = {
-      K: 1000,
-      M: 1000 * 1000,
-      B: 1000 * 1000 * 1000
-    };
+        let num = parseFloat(match[1].replace(/,/g, ""));
+        const unit = match[2] ? match[2].toUpperCase() : "";
 
-    return value * multipliers[unit];
-  }
+        if (unit === "K") num *= 1000;
+        if (unit === "M") num *= 1000000;
+        if (unit === "B") num *= 1000000000;
 
-  const results = [];
-
-  // 获取所有 active offers 区块
-  const offerBlocks = Array.from(document.querySelectorAll('div'))
-    .filter(el => /active offers/i.test(el.textContent));
-
-  offerBlocks.forEach(block => {
-    // 交易所名称
-    const nameEl = block.querySelector('a') || block.querySelector('strong') || block;
-    const name = nameEl ? nameEl.textContent.trim() : null;
-
-    // 获取 price：from $14.72
-    const priceMatch = block.textContent.match(/from\s*\$([\d,]+(\.\d+)?)/i);
-    const price = priceMatch ?
-      parseFloat(priceMatch[1].replace(/,/g, '')) :
-      null;
-
-    // 获取 active offers：6K, 12, 3.2M, 850
-    const offersMatch = block.textContent.match(/active offers\s*([\d\.KMB,]+)/i);
-
-    let active_offers = null;
-    if (offersMatch && offersMatch[1]) {
-      active_offers = parseKM(offersMatch[1]);
+        return Math.round(num * 100) / 100; // 保留两位小数
     }
 
-    if (name && price != null && active_offers != null) {
-      results.push({
-        name,
-        price,
-        active_offers
-      });
+    // 提取数字（带单位）
+    function extractNumber(str) {
+        const m = str.match(/[\d.,]+[KMB]?/i);
+        return m ? m[0] : "";
     }
-  });
-  return results;
+
+    const result = [];
+    const cards = document.querySelectorAll(".active-offer");
+
+    cards.forEach(card => {
+
+        // ---- 基本信息 ----
+        const nameA = card.querySelector("a.custom-underline");
+        const name = nameA ? text(nameA) : "";
+        const market_url = nameA ? nameA.href : "";
+        const img_url = card.querySelector("a.custom-underline img")?.src ?? "";
+
+        const promoted = !!card.querySelector('[data-template="recommended-info"], .text-orange-400');
+
+        // ---- TrustScore ----
+        const trustLink = Array.from(card.querySelectorAll("a"))
+            .find(a => a.href.includes("trustpilot.com"));
+        const trust_score_text = trustLink ? text(trustLink) : "";
+
+        // ---- Active Offers ----
+        let active_offers = "";
+
+        const allTextNodes = Array.from(card.querySelectorAll("*"))
+            .map(el => text(el))
+            .filter(t => /active offers?/i.test(t));
+
+        for (const t of allTextNodes) {
+            const raw = extractNumber(t);
+            if (raw) {
+                active_offers = parseUnitNumber(raw);
+                break;
+            }
+        }
+
+        // ---- Price（去除美元符号 + 支持单位转换） ----
+        let price = "";
+
+        const priceEl = Array.from(card.querySelectorAll("div.font-bold"))
+            .find(el => /\$[\d.,]+[KMB]?/i.test(text(el)));
+
+        if (priceEl) {
+            const priceRaw = text(priceEl).replace(/[^0-9KMB.,]/gi, "");  
+            price = parseUnitNumber(priceRaw);
+        }
+
+        // ---- Offer URL ----
+        const offerBtn = Array.from(card.querySelectorAll("a"))
+            .find(a =>
+                (/offer/i.test(a.textContent) || /buy/i.test(a.textContent)) &&
+                !a.href.includes("trustpilot")
+            );
+        const offer_url = offerBtn ? offerBtn.href : "";
+
+        result.push({
+            name,
+            market_url,
+            img_url,
+            trust_score_text,
+            active_offers,   // 纯数字
+            price,           // 纯数字（已去 "$"）
+            offer_url,
+            promoted
+        });
+    });
+    return result;
   });
   finalDataCases['skin'] = skin;
-  finalDataCases['data'] = data;
+  finalDataCases['data'] = _data;
   finalDataCases['id'] = batchId;
   finalDataCases['timestamp'] = Date.now()
-  await tables.skins.insert(finalDataCases);
+  // await tables.skins.insert(finalDataCases);
+  console.log(_data)
   await sleep(10000)
   try{
     await browser.close()

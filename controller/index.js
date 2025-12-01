@@ -32,6 +32,10 @@ async function getLatestSkinData() {
   return sameBatchData;
 }
 
+async function homeIndex() {
+  const skins = await getLatestSkinData();
+  // const 
+}
 module.exports = {
     getLatestMarketData,
     getLatestSkinData

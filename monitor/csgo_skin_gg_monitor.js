@@ -11,9 +11,9 @@ const init = async ()=>
 
 const loope = async ()=>
 {
+    await csskin_gg.fetchMarketData();
+    await sleep(600000)
     try{
-        // await csskin_gg.fetchMarketData();
-        // await sleep(3600000)
         await csskin_gg.fetchSkinData();
         await sleep(3600000)
     }catch(e)

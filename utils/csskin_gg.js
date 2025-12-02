@@ -351,7 +351,7 @@ const casesData  =async (batchId,skin,url) => {
   finalDataCases['data'] = _data;
   finalDataCases['id'] = batchId;
   finalDataCases['timestamp'] = Date.now()
-  // await tables.skins.insert(finalDataCases);
+  await tables.skins.insert(finalDataCases);
   console.log(_data)
   await sleep(10000)
   try{

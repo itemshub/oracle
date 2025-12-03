@@ -16,6 +16,8 @@ const app = express();
 const PORT = 7749;
 const cases = require("./config/case.json")
 const markets = require("./config/market.json");
+const cors = require('cors');
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use((err, req, res, next) => {

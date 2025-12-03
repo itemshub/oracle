@@ -8,6 +8,8 @@ const mainDB = process.env.DB_NAME;
 const sUser = "users";
 const sUserToken = "user_tokens";
 
+const sAnnouncement = "announcement";
+
 // --------------------------------------
 // Global MongoDB Connection Pool (Singleton)
 // --------------------------------------
@@ -90,6 +92,24 @@ async function verfiPassword(email, pass) {
         status: users[0].password === pass,
         user: users[0]
     };
+}
+
+async function newAnnouncement(title,msg) {
+    return safeQuery(async () => {
+        const col = await getCollection(sAnnouncement);
+        return await col.insertOne({
+            title,
+            "message":msg,
+            "timestamp":Date.now()
+        });
+    });
+}
+
+async function getAnnouncement() {
+    return safeQuery(async () => {
+        const col = await getCollection(sAnnouncement);
+        return await col.find({ }).project({ _id: 0 }).toArray();
+    });
 }
 
 // --------------------------------------
@@ -271,5 +291,8 @@ module.exports = {
     delAll,
     getAccountToken,
     updatePassword,
-    MongoTable
+    MongoTable,
+
+    newAnnouncement,
+    getAnnouncement
 };

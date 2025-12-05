@@ -1,4 +1,5 @@
 const { MongoTable,getAnnouncement } = require("../db/db")
+const mk = require("../config/market.json")
 const tables = {
     skins: new MongoTable("skins"),
     skins_batch: new MongoTable("skins_batch"),
@@ -78,6 +79,23 @@ async function index() {
     i['averageSub'] = averageSub;
     i['price'] = totalPrice/i.data?.length;
     i['offers'] = totalOffer/i.data?.length;
+  }
+
+  for(let i of markets)
+  {
+    for(let u of mk)
+    {
+      if(i.name.toLowerCase() == u.name.toLocaleLowerCase())
+      {
+        //Market information merge
+        i['img_url'] = u.logo_url;
+        i['avg_discount'] = Number((u.avg_discount.split("%")[0])) ? Number((u.avg_discount.split("%")[0]))  : 0;
+        i['offers'] = u.offers;
+        i['items'] = u.items;
+        i['value'] = u.value;
+        i['visits'] = u.visits;
+      }
+    }
   }
   profitRate = skinsAverageSub;
   skinsAverageSub = skinsAverageSub/skins.length;

@@ -37,7 +37,7 @@ async function getAnnounce() {
 }
 
 async function index() {
-  const skins = await getLatestSkinData()
+  let skins = await getLatestSkinData()
   skins = skins.filter(item => item.seller_fee != null);
   for(let i of skins)
   {

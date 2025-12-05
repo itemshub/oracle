@@ -40,7 +40,7 @@ async function index() {
   let skins = await getLatestSkinData()
   for(let i of skins)
   {
-    i["data"] = i.data.filter(item => item.seller_fee!=null).filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price);
+    i["data"] = i.data.filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price);
   }
   let markets = await getLatestMarketData();
   markets = markets.filter(item => item.seller_fee!=null)

@@ -17,15 +17,24 @@
 
     document.querySelectorAll("a[href*='/markets/']").forEach(a => {
         const url = a.href;
+
+        // desktop 或 mobile box
         const box = a.querySelector(".md\\:flex") || a.querySelector(".md:hidden");
         if (!box) return;
 
-        // 名称
-        const name = box.querySelector("img.h-5, img.h-6")?.nextSibling?.textContent?.trim()
-            || box.querySelector("div.font-bold")?.textContent?.trim()
-            || "";
+        // logo 图片
+        const logo = box.querySelector("img.inline-block");
+        const logo_url = logo ? logo.src : "";
 
-        // 所有指标值区域
+        // 名称
+        let name = "";
+        if (logo && logo.nextSibling) {
+            name = logo.nextSibling.textContent.trim();
+        } else {
+            name = box.querySelector("div.font-bold")?.textContent?.trim() || "";
+        }
+
+        // 所有指标（前 5 个）
         const values = [...box.querySelectorAll(".font-bold.text-lg")].map(e =>
             e.textContent.trim()
         );
@@ -37,6 +46,7 @@
         const obj = {
             name,
             url,
+            logo_url,
             items: parseNumber(itemsStr),
             offers: parseNumber(offersStr),
             value: parseNumber(valueStr.replace("$", "")),

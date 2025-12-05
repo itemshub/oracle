@@ -14,10 +14,10 @@ const test = async ()=>
 
     for(let i of markets)
     {
-        console.log(
-            `wget ${i.logo_url}`
-        )
+        let logo = i.logo_url.split("/")
+        i.logo_url = `https://itemshub-res.sidcloud.cn/markets/${logo[logo.length-1]}`
     }
+    console.log(JSON.stringify(markets))
 }
 
 test()

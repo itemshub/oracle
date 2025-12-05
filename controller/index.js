@@ -100,7 +100,7 @@ async function index() {
   }
   profitRate = skinsAverageSub;
   skinsAverageSub = skinsAverageSub/skins.length;
-  skins = skins.filter(item => item.active_offers >= 0).filter(item => item.price >= 0);
+  skins = skins.filter(item => item.offers >= 0).filter(item => item.price >= 0);
   return{
     greatProfit,
     profitRate,

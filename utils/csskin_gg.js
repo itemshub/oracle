@@ -48,7 +48,8 @@ async function fetchMarketData() {
   });
 
   for (let i of markets) {
-    await runWithTimeout(() => marketData(batchId, i.url), 120000, i.url);
+    // await runWithTimeout(() => marketData(batchId, i.url), 120000, i.url);
+    await marketData(batchId, i.url);
     await sleep(120000);
   }
 
@@ -194,7 +195,8 @@ async function fetchSkinData() {
   });
 
   for (let i of cases) {
-    await runWithTimeout(() => casesData(batchId,i.id, i.url), 120000, i.url);
+    // await runWithTimeout(() => casesData(batchId,i.id, i.url), 120000, i.url);
+    await casesData(batchId,i.id, i.url);
     await sleep(120000);
   }
 

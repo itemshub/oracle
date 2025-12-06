@@ -7,7 +7,9 @@ const tables = {
     markets_batch: new MongoTable("markets_batch"),
 };
 async function getLatestMarketData() {
-  const latest = await tables.markets_batch.find({});
+  const latest = await tables.markets_batch.find({
+    status:1
+  });
   latest.sort((a, b) => b.id - a.id);
   const top2 = latest.slice(0, 2);
   if (top2.length < 2) return [];
@@ -18,7 +20,9 @@ async function getLatestMarketData() {
 }
 
 async function getLatestSkinData() {
-  const latest = await tables.skins_batch.find({});
+  const latest = await tables.skins_batch.find({
+    status:1
+  });
   latest.sort((a, b) => b.id - a.id);
   const top2 = latest.slice(0, 2);
   if (top2.length < 2) {

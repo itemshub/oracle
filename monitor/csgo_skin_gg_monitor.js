@@ -12,7 +12,7 @@ const init = async ()=>
 const loope = async ()=>
 {
     await csskin_gg.fetchMarketData();
-    await sleep(600000)
+    await sleep(60000)
     try{
         await csskin_gg.fetchSkinData();
         await sleep(3600000)

@@ -1,41 +1,275 @@
 [
-  { "name": "Glove Case", "id": "glove-case", "url": "https://csgoskins.gg/items/glove-case", "img_url": "https://itemshub-res.sidcloud.cn/Glove_Case.webp" },
-  { "name": "Fever Case", "id": "fever-case", "url": "https://csgoskins.gg/items/fever-case", "img_url": "https://itemshub-res.sidcloud.cn/Fever_Case.webp" },
-  { "name": "Fracture Case", "id": "fracture-case", "url": "https://csgoskins.gg/items/fracture-case", "img_url": "https://itemshub-res.sidcloud.cn/Fracture_Case.webp" },
-  { "name": "Recoil Case", "id": "recoil-case", "url": "https://csgoskins.gg/items/recoil-case", "img_url": "https://itemshub-res.sidcloud.cn/Recoil_Case.webp" },
-  { "name": "Revolution Case", "id": "revolution-case", "url": "https://csgoskins.gg/items/revolution-case", "img_url": "https://itemshub-res.sidcloud.cn/Revolution_Case.webp" },
-  { "name": "Kilowatt Case", "id": "kilowatt-case", "url": "https://csgoskins.gg/items/kilowatt-case", "img_url": "https://itemshub-res.sidcloud.cn/Kilowatt_Case.webp" },
-  { "name": "Operation Breakout Weapon Case", "id": "operation-breakout-weapon-case", "url": "https://csgoskins.gg/items/operation-breakout-weapon-case", "img_url": "https://itemshub-res.sidcloud.cn/Operation_Breakout_Weapon_Case.webp" },
-  { "name": "Sealed Genesis Terminal", "id": "sealed-genesis-terminal", "url": "https://csgoskins.gg/items/sealed-genesis-terminal", "img_url": "https://itemshub-res.sidcloud.cn/Sealed_Genesis_Terminal.webp" },
-  { "name": "Spectrum 2 Case", "id": "spectrum-2-case", "url": "https://csgoskins.gg/items/spectrum-2-case", "img_url": "https://itemshub-res.sidcloud.cn/Spectrum_2_Case.webp" },
-  { "name": "Chroma 2 Case", "id": "chroma-2-case", "url": "https://csgoskins.gg/items/chroma-2-case", "img_url": "https://itemshub-res.sidcloud.cn/Chroma_2_Case.webp" },
-  { "name": "Chroma 3 Case", "id": "chroma-3-case", "url": "https://csgoskins.gg/items/chroma-3-case", "img_url": "https://itemshub-res.sidcloud.cn/Chroma_3_Case.webp" },
-  { "name": "Gamma 2 Case", "id": "gamma-2-case", "url": "https://csgoskins.gg/items/gamma-2-case", "img_url": "https://itemshub-res.sidcloud.cn/Gamma_2_Case.webp" },
-  { "name": "Danger Zone Case", "id": "danger-zone-case", "url": "https://csgoskins.gg/items/danger-zone-case", "img_url": "https://itemshub-res.sidcloud.cn/Danger_Zone_Case.webp" },
-  { "name": "Gamma Case", "id": "gamma-case", "url": "https://csgoskins.gg/items/gamma-case", "img_url": "https://itemshub-res.sidcloud.cn/Gamma_Case.webp" },
-  { "name": "Gallery Case", "id": "gallery-case", "url": "https://csgoskins.gg/items/gallery-case", "img_url": "https://itemshub-res.sidcloud.cn/Gallery_Case.webp" },
-  { "name": "Chroma Case", "id": "chroma-case", "url": "https://csgoskins.gg/items/chroma-case", "img_url": "https://itemshub-res.sidcloud.cn/Chroma_Case.webp" },
-  { "name": "Prisma Case", "id": "prisma-case", "url": "https://csgoskins.gg/items/prisma-case", "img_url": "https://itemshub-res.sidcloud.cn/Prisma_Case.webp" },
-  { "name": "Spectrum Case", "id": "spectrum-case", "url": "https://csgoskins.gg/items/spectrum-case", "img_url": "https://itemshub-res.sidcloud.cn/Spectrum_Case.webp" },
-  { "name": "Prisma 2 Case", "id": "prisma-2-case", "url": "https://csgoskins.gg/items/prisma-2-case", "img_url": "https://itemshub-res.sidcloud.cn/Prisma_2_Case.webp" },
-  { "name": "Revolver Case", "id": "revolver-case", "url": "https://csgoskins.gg/items/revolver-case", "img_url": "https://itemshub-res.sidcloud.cn/Revolver_Case.webp" },
-  { "name": "Operation Bravo Case", "id": "operation-bravo-case", "url": "https://csgoskins.gg/items/operation-bravo-case", "img_url": "https://itemshub-res.sidcloud.cn/Operation_Bravo_Case.webp" },
-  { "name": "Snakebite Case", "id": "snakebite-case", "url": "https://csgoskins.gg/items/snakebite-case", "img_url": "https://itemshub-res.sidcloud.cn/Snakebite_Case.webp" },
-  { "name": "Operation Hydra Case", "id": "operation-hydra-case", "url": "https://csgoskins.gg/items/operation-hydra-case", "img_url": "https://itemshub-res.sidcloud.cn/Operation_Hydra_Case.webp" },
-  { "name": "Horizon Case", "id": "horizon-case", "url": "https://csgoskins.gg/items/horizon-case", "img_url": "https://itemshub-res.sidcloud.cn/Horizon_Case.webp" },
-  { "name": "Clutch Case", "id": "clutch-case", "url": "https://csgoskins.gg/items/clutch-case", "img_url": "https://itemshub-res.sidcloud.cn/Clutch_Case.webp" },
-  { "name": "Operation Phoenix Weapon Case", "id": "operation-phoenix-weapon-case", "url": "https://csgoskins.gg/items/operation-phoenix-weapon-case", "img_url": "https://itemshub-res.sidcloud.cn/Operation_Phoenix_Weapon_Case.webp" },
-  { "name": "Operation Wildfire Case", "id": "operation-wildfire-case", "url": "https://csgoskins.gg/items/operation-wildfire-case", "img_url": "https://itemshub-res.sidcloud.cn/Operation_Wildfire_Case.webp" },
-  { "name": "CS20 Case", "id": "cs20-case", "url": "https://csgoskins.gg/items/cs20-case", "img_url": "https://itemshub-res.sidcloud.cn/CS20_Case.webp" },
-  { "name": "Operation Riptide Case", "id": "operation-riptide-case", "url": "https://csgoskins.gg/items/operation-riptide-case", "img_url": "https://itemshub-res.sidcloud.cn/Operation_Riptide_Case.webp" },
-  { "name": "Shattered Web Case", "id": "shattered-web-case", "url": "https://csgoskins.gg/items/shattered-web-case", "img_url": "https://itemshub-res.sidcloud.cn/Shattered_Web_Case.webp" },
-  { "name": "Shadow Case", "id": "shadow-case", "url": "https://csgoskins.gg/items/shadow-case", "img_url": "https://itemshub-res.sidcloud.cn/Shadow_Case.webp" },
-  { "name": "Huntsman Weapon Case", "id": "huntsman-weapon-case", "url": "https://csgoskins.gg/items/huntsman-weapon-case", "img_url": "https://itemshub-res.sidcloud.cn/Huntsman_Weapon_Case.webp" },
-  { "name": "Falchion Case", "id": "falchion-case", "url": "https://csgoskins.gg/items/falchion-case", "img_url": "https://itemshub-res.sidcloud.cn/Falchion_Case.webp" },
-  { "name": "Winter Offensive Weapon Case", "id": "winter-offensive-weapon-case", "url": "https://csgoskins.gg/items/winter-offensive-weapon-case", "img_url": "https://itemshub-res.sidcloud.cn/Winter_Offensive_Weapon_Case.webp" },
-  { "name": "eSports 2013 Winter Case", "id": "esports-2013-winter-case", "url": "https://csgoskins.gg/items/esports-2013-winter-case", "img_url": "https://itemshub-res.sidcloud.cn/eSports_2013_Winter_Case.webp" },
-  { "name": "eSports 2014 Summer Case", "id": "esports-2014-summer-case", "url": "https://csgoskins.gg/items/esports-2014-summer-case", "img_url": "https://itemshub-res.sidcloud.cn/eSports_2014_Summer_Case.webp" },
-  { "name": "eSports 2013 Case", "id": "esports-2013-case", "url": "https://csgoskins.gg/items/esports-2013-case", "img_url": "https://itemshub-res.sidcloud.cn/eSports_2013_Case.webp" },
-  { "name": "Operation Broken Fang Case", "id": "operation-broken-fang-case", "url": "https://csgoskins.gg/items/operation-broken-fang-case", "img_url": "https://itemshub-res.sidcloud.cn/Operation_Broken_Fang_Case.webp" },
-  { "name": "Operation Vanguard Weapon Case", "id": "operation-vanguard-weapon-case", "url": "https://csgoskins.gg/items/operation-vanguard-weapon-case", "img_url": "https://itemshub-res.sidcloud.cn/Operation_Vanguard_Weapon_Case.webp" }
+    {
+        "name": "Glove Case",
+        "id": "glove-case",
+        "url": "https://csgoskins.gg/items/glove-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Glove_Case.webp",
+        "item_id": 35086
+    },
+    {
+        "name": "Fever Case",
+        "id": "fever-case",
+        "url": "https://csgoskins.gg/items/fever-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Fever_Case.webp",
+        "item_id": 1115500
+    },
+    {
+        "name": "Fracture Case",
+        "id": "fracture-case",
+        "url": "https://csgoskins.gg/items/fracture-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Fracture_Case.webp",
+        "item_id": 781534
+    },
+    {
+        "name": "Recoil Case",
+        "id": "recoil-case",
+        "url": "https://csgoskins.gg/items/recoil-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Recoil_Case.webp",
+        "item_id": 900464
+    },
+    {
+        "name": "Revolution Case",
+        "id": "revolution-case",
+        "url": "https://csgoskins.gg/items/revolution-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Revolution_Case.webp",
+        "item_id": 921379
+    },
+    {
+        "name": "Kilowatt Case",
+        "id": "kilowatt-case",
+        "url": "https://csgoskins.gg/items/kilowatt-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Kilowatt_Case.webp",
+        "item_id": 956398
+    },
+    {
+        "name": "Operation Breakout Weapon Case",
+        "id": "operation-breakout-weapon-case",
+        "url": "https://csgoskins.gg/items/operation-breakout-weapon-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Operation_Breakout_Weapon_Case.webp",
+        "item_id": 35883
+    },
+    {
+        "name": "Sealed Genesis Terminal",
+        "id": "sealed-genesis-terminal",
+        "url": "https://csgoskins.gg/items/sealed-genesis-terminal",
+        "img_url": "https://itemshub-res.sidcloud.cn/Sealed_Genesis_Terminal.webp",
+        "item_id": 1119940
+    },
+    {
+        "name": "Spectrum 2 Case",
+        "id": "spectrum-2-case",
+        "url": "https://csgoskins.gg/items/spectrum-2-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Spectrum_2_Case.webp",
+        "item_id": 38148
+    },
+    {
+        "name": "Chroma 2 Case",
+        "id": "chroma-2-case",
+        "url": "https://csgoskins.gg/items/chroma-2-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Chroma_2_Case.webp",
+        "item_id": 34369
+    },
+    {
+        "name": "Chroma 3 Case",
+        "id": "chroma-3-case",
+        "url": "https://csgoskins.gg/items/chroma-3-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Chroma_3_Case.webp",
+        "item_id": 33820
+    },
+    {
+        "name": "Gamma 2 Case",
+        "id": "gamma-2-case",
+        "url": "https://csgoskins.gg/items/gamma-2-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Gamma_2_Case.webp",
+        "item_id": 34987
+    },
+    {
+        "name": "Danger Zone Case",
+        "id": "danger-zone-case",
+        "url": "https://csgoskins.gg/items/danger-zone-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Danger_Zone_Case.webp",
+        "item_id": 763236
+    },
+    {
+        "name": "Gamma Case",
+        "id": "gamma-case",
+        "url": "https://csgoskins.gg/items/gamma-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Gamma_Case.webp",
+        "item_id": 34989
+    },
+    {
+        "name": "Gallery Case",
+        "id": "gallery-case",
+        "url": "https://csgoskins.gg/items/gallery-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Gallery_Case.webp",
+        "item_id": 967941
+    },
+    {
+        "name": "Chroma Case",
+        "id": "chroma-case",
+        "url": "https://csgoskins.gg/items/chroma-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Chroma_Case.webp",
+        "item_id": 33813
+    },
+    {
+        "name": "Prisma Case",
+        "id": "prisma-case",
+        "url": "https://csgoskins.gg/items/prisma-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Prisma_Case.webp",
+        "item_id": 769121
+    },
+    {
+        "name": "Spectrum Case",
+        "id": "spectrum-case",
+        "url": "https://csgoskins.gg/items/spectrum-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Spectrum_Case.webp",
+        "item_id": 38150
+    },
+    {
+        "name": "Prisma 2 Case",
+        "id": "prisma-2-case",
+        "url": "https://csgoskins.gg/items/prisma-2-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Prisma_2_Case.webp",
+        "item_id": 779175
+    },
+    {
+        "name": "Revolver Case",
+        "id": "revolver-case",
+        "url": "https://csgoskins.gg/items/revolver-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Revolver_Case.webp",
+        "item_id": 36354
+    },
+    {
+        "name": "Operation Bravo Case",
+        "id": "operation-bravo-case",
+        "url": "https://csgoskins.gg/items/operation-bravo-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Operation_Bravo_Case.webp",
+        "item_id": 35879
+    },
+    {
+        "name": "Snakebite Case",
+        "id": "snakebite-case",
+        "url": "https://csgoskins.gg/items/snakebite-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Snakebite_Case.webp",
+        "item_id": 857515
+    },
+    {
+        "name": "Operation Hydra Case",
+        "id": "operation-hydra-case",
+        "url": "https://csgoskins.gg/items/operation-hydra-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Operation_Hydra_Case.webp",
+        "item_id": 35885
+    },
+    {
+        "name": "Horizon Case",
+        "id": "horizon-case",
+        "url": "https://csgoskins.gg/items/horizon-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Horizon_Case.webp",
+        "item_id": 759175
+    },
+    {
+        "name": "Clutch Case",
+        "id": "clutch-case",
+        "url": "https://csgoskins.gg/items/clutch-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Clutch_Case.webp",
+        "item_id": 45237
+    },
+    {
+        "name": "Operation Phoenix Weapon Case",
+        "id": "operation-phoenix-weapon-case",
+        "url": "https://csgoskins.gg/items/operation-phoenix-weapon-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Operation_Phoenix_Weapon_Case.webp",
+        "item_id": 35890
+    },
+    {
+        "name": "Operation Wildfire Case",
+        "id": "operation-wildfire-case",
+        "url": "https://csgoskins.gg/items/operation-wildfire-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Operation_Wildfire_Case.webp",
+        "item_id": 35895
+    },
+    {
+        "name": "CS20 Case",
+        "id": "cs20-case",
+        "url": "https://csgoskins.gg/items/cs20-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/CS20_Case.webp",
+        "item_id": 773524
+    },
+    {
+        "name": "Operation Riptide Case",
+        "id": "operation-riptide-case",
+        "url": "https://csgoskins.gg/items/operation-riptide-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Operation_Riptide_Case.webp",
+        "item_id": 871092
+    },
+    {
+        "name": "Shattered Web Case",
+        "id": "shattered-web-case",
+        "url": "https://csgoskins.gg/items/shattered-web-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Shattered_Web_Case.webp",
+        "item_id": 774681
+    },
+    {
+        "name": "Shadow Case",
+        "id": "shadow-case",
+        "url": "https://csgoskins.gg/items/shadow-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Shadow_Case.webp",
+        "item_id": 37510
+    },
+    {
+        "name": "Huntsman Weapon Case",
+        "id": "huntsman-weapon-case",
+        "url": "https://csgoskins.gg/items/huntsman-weapon-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Huntsman_Weapon_Case.webp",
+        "item_id": 35092
+    },
+    {
+        "name": "Falchion Case",
+        "id": "falchion-case",
+        "url": "https://csgoskins.gg/items/falchion-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Falchion_Case.webp",
+        "item_id": 33825
+    },
+    {
+        "name": "Winter Offensive Weapon Case",
+        "id": "winter-offensive-weapon-case",
+        "url": "https://csgoskins.gg/items/winter-offensive-weapon-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Winter_Offensive_Weapon_Case.webp",
+        "item_id": 42240
+    },
+    {
+        "name": "eSports 2013 Winter Case",
+        "id": "esports-2013-winter-case",
+        "url": "https://csgoskins.gg/items/esports-2013-winter-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/eSports_2013_Winter_Case.webp",
+        "item_id": 42346
+    },
+    {
+        "name": "eSports 2014 Summer Case",
+        "id": "esports-2014-summer-case",
+        "url": "https://csgoskins.gg/items/esports-2014-summer-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/eSports_2014_Summer_Case.webp",
+        "item_id": 42347
+    },
+    {
+        "name": "eSports 2013 Case",
+        "id": "esports-2013-case",
+        "url": "https://csgoskins.gg/items/esports-2013-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/eSports_2013_Case.webp",
+        "item_id": 42345
+    },
+    {
+        "name": "Operation Broken Fang Case",
+        "id": "operation-broken-fang-case",
+        "url": "https://csgoskins.gg/items/operation-broken-fang-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Operation_Broken_Fang_Case.webp",
+        "item_id": 835343
+    },
+    {
+        "name": "Operation Vanguard Weapon Case",
+        "id": "operation-vanguard-weapon-case",
+        "url": "https://csgoskins.gg/items/operation-vanguard-weapon-case",
+        "img_url": "https://itemshub-res.sidcloud.cn/Operation_Vanguard_Weapon_Case.webp",
+        "item_id": 35893
+    }
 ]

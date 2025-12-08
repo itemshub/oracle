@@ -42,14 +42,16 @@ async function getAnnounce() {
 
 async function index() {
   let skins = await getLatestSkinData()
-  for(let i of skins)
-  {
-    i["data"] = i.data.filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price);
-  }
-  let markets = await getLatestMarketData();
+
   const whitelist = [
     "BUFF163"
   ]
+
+  for(let i of skins)
+  {
+    i["data"] = i.data.filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price).filter(item =>item.name != null && whitelist.includes(item.name));;
+  }
+  let markets = await getLatestMarketData();
   markets = markets.filter(item => item.seller_fee!=null).filter(item =>item.name != null && whitelist.includes(item.name));
   const announce = await getAnnounce();
   let lastUpdateTime = skins?.length >0 ? skins[0].timestamp : Date.now();

@@ -11,7 +11,7 @@ const tables = {
 const express = require('express');
 var bodyParser = require('body-parser');
 var querystring = require('querystring');
-const { getLatestMarketData, getLatestSkinData, index } = require('./controller');
+const { getLatestMarketData, getLatestSkinData, index, arbi } = require('./controller');
 const app = express();
 const PORT = 7749;
 const cases = require("./config/case.json")
@@ -70,6 +70,12 @@ app.get('/index', async function(req, res) {
   const ret = await index();
   return sendSuccess(res, ret);
 });
+
+app.get('/arbi', async function(req, res) {
+  const ret = await arbi();
+  return sendSuccess(res, ret);
+});
+
 
 app.listen(PORT, () => {
   console.log(`🚀 API RUN NOW: http://localhost:${PORT}`);

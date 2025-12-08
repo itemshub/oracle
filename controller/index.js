@@ -1,6 +1,7 @@
 const { MongoTable,getAnnouncement } = require("../db/db")
 const mk = require("../config/market.json")
 const mk_cn = require("../config/market_cn.json")
+const cases = require("../config/case.json")
 const tables = {
     skins: new MongoTable("skins"),
     skins_batch: new MongoTable("skins_batch"),
@@ -159,8 +160,52 @@ async function index() {
   }
 }
 
+async function arbi() {
+  let ret = [];
+  for(let i of cases)
+  {
+    let amm =await (await tables.amm.col()).find({ skinId : i.id }).sort({ timestamp: -1 }).limit(1).project({ _id: 0 }).toArray();
+    // console.log(amm)
+    if(amm.length > 0)
+    {
+      amm = amm[0];
+      const mks = Object.keys(amm?.data);
+      let arb =[];
+      for(let u of mks)
+      {
+        for(y of mks)
+        {
+          if(u!=y && amm.data[u].maker >0&& amm.data[y].maker >0 && amm.data[u].maker > amm.data[y].maker )
+          {
+
+            arb.push(
+              {
+                from:u,
+                to:y,
+                sub:amm.data[u].maker - amm.data[y].maker,
+                rate : (amm.data[u].maker-amm.data[y].maker)/amm.data[y].maker
+              }
+            )
+          }
+        }
+      }
+
+      arb = arb.sort((a, b) => b.rate - a.rate)
+      let arb_ret = {
+        name:i.name,
+        id:i.id,
+        max_arb_rate:arb?.length> 0 ? arb[0].rate : 0,
+        raw:amm,
+        arb
+      }
+      ret.push(arb_ret)
+    }
+  }
+  return ret
+}
 module.exports = {
     getLatestMarketData,
     getLatestSkinData,
-    index
+    index,
+    arbi
 }

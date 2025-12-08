@@ -1,5 +1,6 @@
 const { MongoTable,getAnnouncement } = require("../db/db")
 const mk = require("../config/market.json")
+const mk_cn = require("../config/market_cn.json")
 const tables = {
     skins: new MongoTable("skins"),
     skins_batch: new MongoTable("skins_batch"),
@@ -49,7 +50,8 @@ async function index() {
 
   for(let i of skins)
   {
-    i["data"] = i.data.filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price).filter(item =>item.name != null && whitelist.includes(item.name));;
+    i["data"] = i.data.filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price).filter(item =>item.name != null && whitelist.includes(item.name));
+    //TODO concat real data.
   }
   let markets = await getLatestMarketData();
   markets = markets.filter(item => item.seller_fee!=null).filter(item =>item.name != null && whitelist.includes(item.name));
@@ -107,6 +109,7 @@ async function index() {
       }
     }
   }
+  markets = markets.concat(mk_cn)
   profitRate = skinsAverageSub;
   skinsAverageSub = skinsAverageSub/skins.length;
   skins = skins.filter(item => item.offers >= 0).filter(item => item.price >= 0);

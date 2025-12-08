@@ -1,0 +1,53 @@
+[
+    {
+        "_id": "693432ef8ae0bf210b63b06b",
+        "name": "IGXE",
+        "seller_fee": "1.0%",
+        "buyer_fee": "0%",
+        "founded": "August 17th, 2020",
+        "headquarters": "Hangzhou, China",
+        "monthly_visits": "6.4M",
+        "id": 1765027616437,
+        "timestamp": 1765028591661,
+        "img_url": "https://itemshub-res.sidcloud.cn/markets/igxe.jpg",
+        "avg_discount": 18.1,
+        "offers": 450000,
+        "items": 2710,
+        "value": 13110000,
+        "visits": 640000
+    },
+    {
+        "_id": "693432ef8ae0bf210b63b06b",
+        "name": "悠悠有品",
+        "seller_fee": "1.50%",
+        "buyer_fee": "0%",
+        "founded": "August 17th, 2022",
+        "headquarters": "Hangzhou, China",
+        "monthly_visits": "6.4M",
+        "id": 1765027616437,
+        "timestamp": 1765028591661,
+        "img_url": "https://itemshub-res.sidcloud.cn/markets/uuyp.jpg",
+        "avg_discount": 28.1,
+        "offers": 4500000,
+        "items": 27100,
+        "value": 131100000,
+        "visits": 6400000
+    },
+    {
+        "_id": "693432ef8ae0bf210b63b06b",
+        "name": "C5",
+        "seller_fee": "2.0%",
+        "buyer_fee": "0%",
+        "founded": "August 17th, 2019",
+        "headquarters": "Hangzhou, China",
+        "monthly_visits": "6.4M",
+        "id": 1765027616437,
+        "timestamp": 1765028591661,
+        "img_url": "https://itemshub-res.sidcloud.cn/markets/c5.png",
+        "avg_discount": 28.1,
+        "offers": 4500000,
+        "items": 27100,
+        "value": 131100000,
+        "visits": 6400000
+    }
+]

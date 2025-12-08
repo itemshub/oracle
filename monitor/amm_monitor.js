@@ -33,6 +33,8 @@ const loop = async()=>
                 try{
                     const amm = {
                         batchId,
+                        skinId:i.id,
+                        name:i.name,
                         timestamp:Date.now(),
                         data:{
                             buff163:await buff.price(i),

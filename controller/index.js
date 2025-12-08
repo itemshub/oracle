@@ -6,6 +6,7 @@ const tables = {
     skins_batch: new MongoTable("skins_batch"),
     markets: new MongoTable("markets"),
     markets_batch: new MongoTable("markets_batch"),
+    amm: new MongoTable("amm"),
 };
 async function getLatestMarketData() {
   const latest = await tables.markets_batch.find({
@@ -45,12 +46,45 @@ async function index() {
   let skins = await getLatestSkinData()
 
   const whitelist = [
-    "BUFF163"
+    "BUFF163",
+    "IGXE",
+    "悠悠有品",
+    "C5"
   ]
 
   for(let i of skins)
   {
-    i["data"] = i.data.filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price).filter(item =>item.name != null && whitelist.includes(item.name));
+    for(let u of mk_cn)
+    {
+      let m = JSON.parse(JSON.stringify(u));
+      m['active_offers'] = 1600
+      const ad =await (await tables.amm.col()).find({ skinId : i.skin }).sort({ timestamp: -1 }).limit(1).project({ _id: 0 }).toArray();
+      
+      if(ad?.length > 0 && ad[0].data )
+      {
+        // console.log(ad[0].data)
+        if(u.name == "IGXE")
+        {
+          m['price'] = Number(ad[0].data.igxe?.maker);
+        }
+        if(u.name == "悠悠有品")
+        {
+          m['price'] = Number(ad[0].data.uuyp?.maker);
+        }
+        if(u.name == "C5")
+        {
+          m['price'] = Number(ad[0].data.c5?.maker);
+        }
+      }else{
+         m['price'] = 0;
+      }
+      
+      m['offer_url'] = "https://csgoskins.gg/redirects/78167793104?s=1&p=20&h=5fc43fdfd8906b0b"
+      m['promoted'] = false
+      i.data.push(m)
+    }
+
+    i["data"] = i.data.filter(item => Number(item.price) >0).filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price).filter(item =>item.name != null && whitelist.includes(item.name));
     //TODO concat real data.
   }
   let markets = await getLatestMarketData();

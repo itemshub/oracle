@@ -275,6 +275,11 @@ class MongoTable {
         return await col.find(query).toArray();
     }
 
+    async sort(query = {}) {
+        const col = await this.col();
+        return await col.sort(query).toArray();
+    }
+
     // ======== NeDB.findOne() ========
     async findOne(query = {}) {
         const col = await this.col();

@@ -10,6 +10,7 @@ const sUserToken = "user_tokens";
 
 const sAnnouncement = "announcement";
 
+const sMinerAuth = "miner_auth"
 // --------------------------------------
 // Global MongoDB Connection Pool (Singleton)
 // --------------------------------------
@@ -216,6 +217,34 @@ async function newAccountToken(token, address) {
     });
 }
 
+
+
+
+async function updateMinerAuth(type, data) {
+  return safeQuery(async () => {
+    const col = await getCollection(sMinerAuth);
+
+    return await col.updateOne(
+      { type },                      // 查询条件
+      {
+        $set: {
+          data,
+          timestamp: Date.now()
+        }
+      },
+      { upsert: true }               // 不存在则新增
+    );
+  });
+}
+
+
+async function getMinerAuth(filter) {
+    return safeQuery(async () => {
+        const col = await getCollection(sMinerAuth);
+        return await col.find(filter).project({ _id: 0 }).toArray();
+    });
+}
+
 // --------------------------------------
 
 // More
@@ -294,5 +323,8 @@ module.exports = {
     MongoTable,
 
     newAnnouncement,
-    getAnnouncement
+    getAnnouncement,
+
+    updateMinerAuth,
+    getMinerAuth
 };

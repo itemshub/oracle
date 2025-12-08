@@ -1,4 +1,5 @@
 const path = require('path');
+const cfg = require("../../config/config.json")
 //Chrome
 const puppeteer = require("puppeteer-core");
 
@@ -7,11 +8,8 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let logIndex =0
-const screenShotLog = async (page) =>
-{
-  logIndex++;
-}
+let taker_data = {};
+let maker_data = {};
 
 async function runWithTimeout(fn, ms, urlLabel = "") {
   const timeoutPromise = new Promise((resolve, reject) => {
@@ -28,29 +26,6 @@ async function runWithTimeout(fn, ms, urlLabel = "") {
     console.error(`⚠️ 任务执行失败 url=${urlLabel}`, err);
   });
 }
-
-async function fetchMarketData() {
-  const batchId = Date.now();
-  await tables.markets_batch.insert({
-    id: batchId,
-    startTime: Date.now(),
-    endTime: 0,
-    status: 0
-  });
-
-  for (let i of markets) {
-    await runWithTimeout(() => marketData(batchId, i.url), 120000, i.url);
-    await sleep(120000);
-  }
-
-  await tables.markets_batch.update(
-    { id: batchId },
-    { $set: { endTime: Date.now(), status: 1 } },
-    { multi: false }
-  );
-}
-
-let finalData = {}
 
 const requestInjuection = async (page)=>
 {
@@ -69,16 +44,38 @@ const requestInjuection = async (page)=>
       if(url.includes("v1/search/v2/sell"))
       {
         //The maker api
+
+        // console.log(
+        //     JSON.stringify(
+        //         JSON.parse(body)
+        //     )
+        // )
+        // console.log(body)
+        // console.log((JSON.parse(body))?.data)
+        maker_data = JSON.parse(
+          JSON.stringify(
+            (JSON.parse(body))?.data
+          )
+        )
+
+        // maker_data = 123
       }
       if(url.includes("v1/steamtrade/sga/purchase"))
       {
         //The taker api
-
-        console.log(
-            JSON.stringify(
-                JSON.parse(body)
-            )
-        )
+//  console.log(body)
+        // console.log(
+        //     JSON.stringify(
+        //         JSON.parse(body)
+        //     )
+        // )
+        // console.log((JSON.parse(body))?.data)
+        taker_data = JSON.parse(
+          JSON.stringify(
+            (JSON.parse(body))?.data
+          )
+        );
+        // taker_data = 456
       }
     //   console.log(url,JSON.parse(body))
     } catch (err) {
@@ -189,10 +186,9 @@ const getData  =async (batchId,url) => {
 });
 
 
-  await page.goto(url, { waitUntil: "load" });
-  await sleep(20000)
-  console.log(finalData)
-  await sleep(10000)
+  await page.goto(url, { waitUntil: "load" }).catch(() => {}); 
+
+  await sleep(5000)
   try{
     await browser.close()
     return 0;
@@ -203,14 +199,42 @@ const getData  =async (batchId,url) => {
   }
 };
 
-//urls
-const makerUrl = "https://www.c5game.com/en/csgo/553482368/Prisma%20Case/sell"
-const takerUrl = "https://www.c5game.com/en/csgo/553482368/Prisma%20Case/purchase"
-
-async function fetchData() {
-    const batchId = Date.now();
-    await runWithTimeout(() => getData(0,takerUrl), 120000, 0);
-    await sleep(120000);
+async function fetchData(url) {
+    await getData(0,url)
+    // await sleep(120000);
+}
+async function taker(cases)
+{
+    taker_data = {};
+    await fetchData(`https://www.c5game.com/en/csgo/${cases.c5_id}/${cases.name}/purchase`)
+    // console.log(taker_data)
+    if(taker_data?.list && taker_data.list?.length > 0)
+    {
+      return taker_data.list[0]?.cnyPrice ? taker_data.list[0]?.cnyPrice : 0
+    }
+   return 0 ;
 }
 
-fetchData()
+async function maker(cases)
+{
+    maker_data = {};
+    await fetchData(`https://www.c5game.com/en/csgo/${cases.c5_id}/${cases.name}/sell`)
+    // console.log(maker_data)
+    if(maker_data?.list && maker_data.list?.length > 0)
+    {
+      return maker_data.list[0]?.cnyPrice ? maker_data.list[0]?.cnyPrice : 0
+    }
+   return 0 ;
+}
+
+async function price(cases) {
+  return {
+    taker: (await taker(cases))/cfg.usdtocny,
+    maker: (await maker(cases))/cfg.usdtocny
+  }
+}
+module.exports = {
+  taker,
+  maker,
+  price
+}

@@ -1,4 +1,5 @@
 const path = require('path');
+const cfg = require("../../config/config.json")
 //Chrome
 const puppeteer = require("puppeteer-core");
 
@@ -7,12 +8,8 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let logIndex =0
-const screenShotLog = async (page) =>
-{
-  logIndex++;
-}
-
+let taker_data = {};
+let maker_data = {};
 async function runWithTimeout(fn, ms, urlLabel = "") {
   const timeoutPromise = new Promise((resolve, reject) => {
     const t = setTimeout(() => {
@@ -28,29 +25,6 @@ async function runWithTimeout(fn, ms, urlLabel = "") {
     console.error(`⚠️ 任务执行失败 url=${urlLabel}`, err);
   });
 }
-
-async function fetchMarketData() {
-  const batchId = Date.now();
-  await tables.markets_batch.insert({
-    id: batchId,
-    startTime: Date.now(),
-    endTime: 0,
-    status: 0
-  });
-
-  for (let i of markets) {
-    await runWithTimeout(() => marketData(batchId, i.url), 120000, i.url);
-    await sleep(120000);
-  }
-
-  await tables.markets_batch.update(
-    { id: batchId },
-    { $set: { endTime: Date.now(), status: 1 } },
-    { multi: false }
-  );
-}
-
-let finalData = {}
 
 const requestInjuection = async (page)=>
 {
@@ -69,12 +43,19 @@ const requestInjuection = async (page)=>
       if(url.includes("goods/market/queryOnSaleCommodityList"))
       {
         //The maker api
+        maker_data = JSON.parse(JSON.stringify(
+          (JSON.parse(body))?.Data
+        ))
+        // console.log(body)
       }
       if(url.includes("purchase/order/getTemplatePurchaseOrderListPC"))
       {
         //The taker api
+        taker_data = JSON.parse(JSON.stringify(
+          (JSON.parse(body))?.data
+        ))
       }
-      console.log(url,JSON.parse(body))
+      // console.log(url,JSON.parse(body))
     } catch (err) {
     //   console.error('Response parsing error:', err);
     }
@@ -132,9 +113,7 @@ const getData  =async (batchId,url) => {
   });
   await requestInjuection(page)
   await page.goto(url, { waitUntil: "load" });
-  await sleep(20000)
-  console.log(finalData)
-  await sleep(10000)
+  await sleep(5000)
   try{
     await browser.close()
     return 0;
@@ -145,14 +124,42 @@ const getData  =async (batchId,url) => {
   }
 };
 
-//urls
-const makerUrl = "https://www.youpin898.com/market/goods-list?listType=10&templateId=102276&gameId=730"
-const takerUrl = "https://www.youpin898.com/market/goods-list?listType=20&templateId=102276&gameId=730"
-
-async function fetchData() {
-    const batchId = Date.now();
-    await runWithTimeout(() => getData(0,takerUrl), 120000, 0);
-    await sleep(120000);
+async function fetchData(url) {
+    await getData(0,url);
 }
 
-fetchData()
+async function taker(cases)
+{
+    taker_data = {};
+    await fetchData(`https://www.youpin898.com/market/goods-list?listType=20&templateId=${cases.uuyp_id}&gameId=730`)
+    // console.log(taker_data)
+    if(taker_data?.purchaseOrderResponseList && taker_data.purchaseOrderResponseList?.length > 0)
+    {
+      return taker_data.purchaseOrderResponseList[0]?.purchasePrice ? taker_data.purchaseOrderResponseList[0]?.purchasePrice : 0
+    }
+   return 0 ;
+}
+
+async function maker(cases)
+{
+    maker_data = {};
+    await fetchData(`https://www.youpin898.com/market/goods-list?listType=10&templateId=${cases.uuyp_id}&gameId=730`)
+    // console.log(maker_data)
+    if( maker_data?.length > 0)
+    {
+      return maker_data[0]?.price ? maker_data[0]?.price : 0
+    }
+   return 0 ;
+}
+
+async function price(cases) {
+  return {
+    taker: (await taker(cases))/cfg.usdtocny,
+    maker: (await maker(cases))/cfg.usdtocny
+  }
+}
+module.exports = {
+  taker,
+  maker,
+  price
+}

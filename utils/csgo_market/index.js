@@ -20,7 +20,7 @@ async function maker(cases)
     {
         if(cases.name == i?.market_hash_name)
             {
-                return i.price
+                return Number(i.price)
             }
     }
    return 0 ;

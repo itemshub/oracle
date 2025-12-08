@@ -32,14 +32,13 @@ const router = {
         buy:`https://market.csgo.com/api/v2/buy-for?key=${process.env.MARKET_KEY}&${process.env.RECIVER_STEAM}`
     }
 }
-const cookies =process.env.COOKIES
 async function buff_price(id) {
     var options = {
         'method': 'GET',
         'url': router.buff.price+id,
-        'headers': {
-            'Cookie': cookies
-        },
+        // 'headers': {
+        //     'Cookie': cookies
+        // },
     };
     return doRequest(options);
 }
@@ -48,15 +47,15 @@ async function buff_buy_order(id) {
     var options = {
         'method': 'GET',
         'url': router.buff.buy_order+id,
-        'headers': {
-            'Cookie': cookies
-        },
+        // 'headers': {
+        //     'Cookie': cookies
+        // },
     };
     return doRequest(options);
 }
 
 
-async function igxe_price(id) {
+async function igxe_price(id,cookies) {
     var options = {
         'method': 'GET',
         'url': router.igxe.price+id,
@@ -67,7 +66,7 @@ async function igxe_price(id) {
     return doRequest(options);
 }
 
-async function igxe_buy_order(id) {
+async function igxe_buy_order(id,cookies) {
     var options = {
         'method': 'GET',
         'url': router.igxe.buy_order+id,
@@ -77,30 +76,6 @@ async function igxe_buy_order(id) {
     };
     return doRequest(options);
 }
-
-
-async function uuyp_price(id) {
-    var options = {
-        'method': 'GET',
-        'url': router.uuyp.price+id,
-        'headers': {
-            'Cookie': cookies
-        },
-    };
-    return doRequest(options);
-}
-
-async function uuyp_buy_order(id) {
-    var options = {
-        'method': 'GET',
-        'url': router.uuyp.buy_order+id,
-        'headers': {
-            'Cookie': cookies
-        },
-    };
-    return doRequest(options);
-}
-
 
 async function market_price_usd() {
     var options = {
@@ -144,8 +119,6 @@ module.exports = {
     buff_buy_order,
     igxe_price,
     igxe_buy_order,
-    uuyp_price,
-    uuyp_buy_order,
     market_price_usd,
     market_order_usd,
     market_buy,

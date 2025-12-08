@@ -57,10 +57,9 @@ async function index() {
   {
     for(let u of mk_cn)
     {
+      const ad =await (await tables.amm.col()).find({ skinId : i.skin }).sort({ timestamp: -1 }).limit(1).project({ _id: 0 }).toArray();
       let m = JSON.parse(JSON.stringify(u));
       m['active_offers'] = 1600
-      const ad =await (await tables.amm.col()).find({ skinId : i.skin }).sort({ timestamp: -1 }).limit(1).project({ _id: 0 }).toArray();
-      
       if(ad?.length > 0 && ad[0].data )
       {
         // console.log(ad[0].data)
@@ -83,6 +82,16 @@ async function index() {
       m['offer_url'] = "https://csgoskins.gg/redirects/78167793104?s=1&p=20&h=5fc43fdfd8906b0b"
       m['promoted'] = false
       i.data.push(m)
+    }
+    for(let u of i.data)
+    {
+      if (u.name == "BUFF163")
+      {
+        if(ad?.length > 0 && ad[0].data )
+        {
+          u['price'] = Number(ad[0].data.buff163?.maker);
+        }
+      }
     }
 
     i["data"] = i.data.filter(item => Number(item.price) >0).filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price).filter(item =>item.name != null && whitelist.includes(item.name));

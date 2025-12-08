@@ -113,7 +113,7 @@ const getData  =async (batchId,url) => {
   });
   await requestInjuection(page)
   await page.goto(url, { waitUntil: "load" });
-  await sleep(5000)
+  await sleep(15000)
   try{
     await browser.close()
     return 0;

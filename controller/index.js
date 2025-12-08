@@ -55,9 +55,9 @@ async function index() {
 
   for(let i of skins)
   {
+    const ad =await (await tables.amm.col()).find({ skinId : i.skin }).sort({ timestamp: -1 }).limit(1).project({ _id: 0 }).toArray();
     for(let u of mk_cn)
     {
-      const ad =await (await tables.amm.col()).find({ skinId : i.skin }).sort({ timestamp: -1 }).limit(1).project({ _id: 0 }).toArray();
       let m = JSON.parse(JSON.stringify(u));
       m['active_offers'] = 1600
       if(ad?.length > 0 && ad[0].data )

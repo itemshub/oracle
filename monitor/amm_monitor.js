@@ -63,11 +63,12 @@ const loop = async()=>
 
 const init = async()=>
 {
-    while(true)
-    {
-        await loop()
-        await sleep(3600000)
-    }
+    // while(true)
+    // {
+    //     await loop()
+    //     await sleep(3600000)
+    // }
+    await loop()
 }
 
 init()

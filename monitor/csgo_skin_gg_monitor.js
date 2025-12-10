@@ -2,11 +2,13 @@ const csskin_gg = require("../utils/csskin_gg")
 const { sleep } = require("../utils/utils")
 const init = async ()=>
 {
-    while(true)
-    {
-        await loope();
-        await sleep(600000)
-    }
+    // while(true)
+    // {
+    //     await loope();
+    //     await sleep(600000)
+    // }
+
+await csskin_gg.fetchSkinData();
 }
 
 const loope = async ()=>

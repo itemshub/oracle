@@ -203,6 +203,7 @@ async function arbi() {
       let arb_ret = {
         name:i.name,
         id:i.id,
+        skin:i,
         max_arb_rate:arb?.length> 0 ? arb[0].rate : 0,
         raw:amm,
         arb

@@ -68,7 +68,10 @@ const init = async()=>
     //     await loop()
     //     await sleep(3600000)
     // }
+    console.log("🍺 Start amm now : ",(new Date()).toLocaleString())
     await loop()
+    console.log("💀 End amm now : ",(new Date()).toLocaleString())
+    process.exit(0)
 }
 
 init()

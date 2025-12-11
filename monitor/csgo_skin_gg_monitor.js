@@ -8,7 +8,10 @@ const init = async ()=>
     //     await sleep(600000)
     // }
 
-await csskin_gg.fetchSkinData();
+    console.log("🍺 Start csskin fetch now : ",(new Date()).toLocaleString())
+    await csskin_gg.fetchSkinData();
+    console.log("💀 End csskin fetch now : ",(new Date()).toLocaleString())
+    process.exit(0)
 }
 
 const loope = async ()=>

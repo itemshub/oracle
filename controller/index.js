@@ -3,9 +3,9 @@ const mk = require("../config/market.json")
 const mk_cn = require("../config/market_cn.json")
 const cases = require("../config/case.json")
 
-const cn_mk = require("../config/market.json")
-const cn_mk_cn = require("../config/market_cn.json")
-const cn_cases = require("../config/case.json")
+const cn_mk = require("../config/cn/market.json")
+const cn_mk_cn = require("../config/cn/market_cn.json")
+const cn_cases = require("../config/cn/case.json")
 
 const tables = {
     skins: new MongoTable("skins"),

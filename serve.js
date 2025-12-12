@@ -67,12 +67,12 @@ app.get('/skin/lts', async function(req, res) {
 });
 
 app.get('/index', async function(req, res) {
-  const ret = await cn_index();
+  const ret = await index();
   return sendSuccess(res, ret);
 });
 
-app.get('/index/raw', async function(req, res) {
-  const ret = await index();
+app.get('/index/cn', async function(req, res) {
+  const ret = await cn_index();
   return sendSuccess(res, ret);
 });
 app.get('/arbi', async function(req, res) {

@@ -51,12 +51,12 @@ async function getAnnounce() {
 async function index() {
   let skins = await getLatestSkinData()
 
-  const whitelist = [
-    "BUFF163",
-    "IGXE",
-    "悠悠有品",
-    "C5"
-  ]
+  // const whitelist = [
+  //   "BUFF163",
+  //   "IGXE",
+  //   "悠悠有品",
+  //   "C5"
+  // ]
 
   for(let i of skins)
   {
@@ -99,11 +99,13 @@ async function index() {
       }
     }
 
-    i["data"] = i.data.filter(item => Number(item.price) >0).filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price).filter(item =>item.name != null && whitelist.includes(item.name));
+    i["data"] = i.data.filter(item => Number(item.price) >0).filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam")
+    // .sort((a, b) => a.price - b.price).filter(item =>item.name != null && whitelist.includes(item.name));
     //TODO concat real data.
   }
   let markets = await getLatestMarketData();
-  markets = markets.filter(item => item.seller_fee!=null).filter(item =>item.name != null && whitelist.includes(item.name));
+  markets = markets.filter(item => item.seller_fee!=null)
+  // .filter(item =>item.name != null && whitelist.includes(item.name));
   const announce = await getAnnounce();
   let lastUpdateTime = skins?.length >0 ? skins[0].timestamp : Date.now();
 
@@ -191,6 +193,7 @@ async function cn_index() {
       if(u.id == i.skin)
       {
         i.name = u.name;
+        i.img_url = u.img_url;
       }
     }
 
@@ -279,7 +282,7 @@ async function cn_index() {
 
   for(let i of markets)
   {
-    for(let u of mk)
+    for(let u of cn_mk)
     {
       if(i.name.toLowerCase() == u.name.toLocaleLowerCase())
       {
@@ -294,7 +297,7 @@ async function cn_index() {
       }
     }
   }
-  markets = markets.concat(mk_cn)
+  markets = markets.concat(cn_mk_cn)
   profitRate = skinsAverageSub;
   skinsAverageSub = skinsAverageSub/skins.length;
   skins = skins.filter(item => item.offers >= 0).filter(item => item.price >= 0);

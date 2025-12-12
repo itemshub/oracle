@@ -11,7 +11,7 @@ const tables = {
 const express = require('express');
 var bodyParser = require('body-parser');
 var querystring = require('querystring');
-const { getLatestMarketData, getLatestSkinData, index, arbi } = require('./controller');
+const { getLatestMarketData, getLatestSkinData, index, arbi, cn_index } = require('./controller');
 const app = express();
 const PORT = 7749;
 const cases = require("./config/case.json")
@@ -67,10 +67,14 @@ app.get('/skin/lts', async function(req, res) {
 });
 
 app.get('/index', async function(req, res) {
-  const ret = await index();
+  const ret = await cn_index();
   return sendSuccess(res, ret);
 });
 
+app.get('/index/raw', async function(req, res) {
+  const ret = await index();
+  return sendSuccess(res, ret);
+});
 app.get('/arbi', async function(req, res) {
   const ret = await arbi();
   return sendSuccess(res, ret);

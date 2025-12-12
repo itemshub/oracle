@@ -2,6 +2,11 @@ const { MongoTable,getAnnouncement } = require("../db/db")
 const mk = require("../config/market.json")
 const mk_cn = require("../config/market_cn.json")
 const cases = require("../config/case.json")
+
+const cn_mk = require("../config/market.json")
+const cn_mk_cn = require("../config/market_cn.json")
+const cn_cases = require("../config/case.json")
+
 const tables = {
     skins: new MongoTable("skins"),
     skins_batch: new MongoTable("skins_batch"),
@@ -169,6 +174,141 @@ async function index() {
   }
 }
 
+async function cn_index() {
+  let skins = await getLatestSkinData()
+
+  const whitelist = [
+    "BUFF163",
+    "IGXE",
+    "悠悠有品",
+    "C5"
+  ]
+
+  for(let i of skins)
+  {
+    for(let u of cn_cases)
+    {
+      if(u.id == i.skin)
+      {
+        i.name = u.name;
+      }
+    }
+
+    const ad =await (await tables.amm.col()).find({ skinId : i.skin }).sort({ timestamp: -1 }).limit(1).project({ _id: 0 }).toArray();
+    for(let u of cn_mk_cn)
+    {
+      let m = JSON.parse(JSON.stringify(u));
+      m['active_offers'] = 1600
+      if(ad?.length > 0 && ad[0].data )
+      {
+        // console.log(ad[0].data)
+        if(u.name == "IGXE")
+        {
+          m['price'] = Number(ad[0].data.igxe?.maker);
+        }
+        if(u.name == "悠悠有品")
+        {
+          m['price'] = Number(ad[0].data.uuyp?.maker);
+        }
+        if(u.name == "C5")
+        {
+          m['price'] = Number(ad[0].data.c5?.maker);
+        }
+      }else{
+         m['price'] = 0;
+      }
+      
+      m['offer_url'] = "https://csgoskins.gg/redirects/78167793104?s=1&p=20&h=5fc43fdfd8906b0b"
+      m['promoted'] = false
+      i.data.push(m)
+    }
+    for(let u of i.data)
+    {
+      if (u.name == "BUFF163")
+      {
+        if(ad?.length > 0 && ad[0].data )
+        {
+          u['price'] = Number(ad[0].data.buff163?.maker);
+        }
+      }
+    }
+
+    i["data"] = i.data.filter(item => Number(item.price) >0).filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price).filter(item =>item.name != null && whitelist.includes(item.name));
+    //TODO concat real data.
+  }
+  let markets = await getLatestMarketData();
+  markets = markets.filter(item => item.seller_fee!=null).filter(item =>item.name != null && whitelist.includes(item.name));
+  const announce = await getAnnounce();
+  let lastUpdateTime = skins?.length >0 ? skins[0].timestamp : Date.now();
+
+  let topSkinSub = [];
+  let skinsAverageSub = 0;
+  let greatProfit = 0;
+  let profitRate  = 0;
+  //Culcuate average price 
+  for(let i of skins)
+  {
+    let totalPrice = 0;
+    let totalOffer = 0;
+    let averageSub = i.data?.length>1 ? (i.data[i.data.length-1].price - i.data[0].price) / i.data[0].price :0
+    if(averageSub > 0.25)
+    {
+      greatProfit+=1;
+    }
+    skinsAverageSub+=averageSub
+    if(averageSub>0.25)
+    {
+      topSkinSub.push(
+        {
+          skin:i,
+          from:i.data[0],
+          to:i.data[i.data.length-1]
+        }
+      )
+    }
+    for(let u of i.data)
+    {
+      totalPrice+=u.price;
+      totalOffer+=u.active_offers;
+    }
+    i['averageSub'] = averageSub;
+    i['price'] = totalPrice/i.data?.length;
+    i['offers'] = totalOffer/i.data?.length;
+  }
+
+  for(let i of markets)
+  {
+    for(let u of mk)
+    {
+      if(i.name.toLowerCase() == u.name.toLocaleLowerCase())
+      {
+        //Market information merge
+        i['name'] = u.name;
+        i['img_url'] = u.logo_url;
+        i['avg_discount'] = Number((u.avg_discount.split("%")[0])) ? Number((u.avg_discount.split("%")[0]))  : 0;
+        i['offers'] = u.offers;
+        i['items'] = u.items;
+        i['value'] = u.value;
+        i['visits'] = u.visits;
+      }
+    }
+  }
+  markets = markets.concat(mk_cn)
+  profitRate = skinsAverageSub;
+  skinsAverageSub = skinsAverageSub/skins.length;
+  skins = skins.filter(item => item.offers >= 0).filter(item => item.price >= 0);
+  return{
+    greatProfit,
+    profitRate,
+    skinsAverageSub,
+    skins,
+    markets,
+    topSkinSub,
+    announce,
+    lastUpdateTime
+  }
+}
+
 async function arbi() {
   let ret = [];
   for(let i of cases)
@@ -217,5 +357,6 @@ module.exports = {
     getLatestMarketData,
     getLatestSkinData,
     index,
-    arbi
+    arbi,
+    cn_index
 }

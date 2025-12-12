@@ -202,15 +202,15 @@ async function cn_index() {
       if(ad?.length > 0 && ad[0].data )
       {
         // console.log(ad[0].data)
-        if(u.name == "IGXE")
+        if(u.name == "京东商城【IGXE店】")
         {
           m['price'] = Number(ad[0].data.igxe?.maker);
         }
-        if(u.name == "悠悠有品")
+        if(u.name == "悠悠有品淘宝小店")
         {
           m['price'] = Number(ad[0].data.uuyp?.maker);
         }
-        if(u.name == "C5")
+        if(u.name == "京东商城【C5小店】")
         {
           m['price'] = Number(ad[0].data.c5?.maker);
         }

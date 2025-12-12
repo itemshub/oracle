@@ -178,10 +178,10 @@ async function cn_index() {
   let skins = await getLatestSkinData()
 
   const whitelist = [
-    "BUFF163",
-    "IGXE",
-    "悠悠有品",
-    "C5"
+    "BUFF163的淘宝小店",
+    "京东商城【IGXE店】",
+    "悠悠有品淘宝小店",
+    "京东商城【C5小店】"
   ]
 
   for(let i of skins)
@@ -229,6 +229,7 @@ async function cn_index() {
         if(ad?.length > 0 && ad[0].data )
         {
           u['price'] = Number(ad[0].data.buff163?.maker);
+          u['name'] = "BUFF163的淘宝小店"
         }
       }
     }

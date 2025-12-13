@@ -328,16 +328,16 @@ async function arbi() {
       {
         for(y of mks)
         {
-          if(u!=y && amm.data[u].maker >0&& amm.data[y].maker >0 && amm.data[u].maker > amm.data[y].maker )
+          if(u!=y && amm.data[u].maker >0&& amm.data[y].maker >0 && amm.data[y].maker > amm.data[u].maker )
           {
 
             arb.push(
               {
                 from:u,
                 to:y,
-                sub:amm.data[u].maker - amm.data[y].maker,
-                rate : (amm.data[u].maker-amm.data[y].maker)/amm.data[y].maker,
-                market_rate : (amm.data[u].taker-amm.data[y].maker)/amm.data[y].maker,
+                sub:amm.data[y].maker - amm.data[u].maker,
+                rate : (amm.data[y].maker-amm.data[u].maker)/amm.data[u].maker,
+                market_rate : (amm.data[y].maker-amm.data[u].taker)/amm.data[u].taker,
               }
             )
           }

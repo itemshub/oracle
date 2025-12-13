@@ -51,12 +51,14 @@ async function getAnnounce() {
 async function index() {
   let skins = await getLatestSkinData()
 
-  // const whitelist = [
-  //   "BUFF163",
-  //   "IGXE",
-  //   "悠悠有品",
-  //   "C5"
-  // ]
+  const whitelist = [
+    "BUFF163",
+    "IGXE",
+    "悠悠有品",
+    "C5",
+    "Steam",
+    "Market.CSGO"
+  ]
 
   for(let i of skins)
   {
@@ -97,15 +99,23 @@ async function index() {
           u['price'] = Number(ad[0].data.buff163?.maker);
         }
       }
+
+      if (u.name == "Market.CSGO")
+      {
+        if(ad?.length > 0 && ad[0].data )
+        {
+          u['price'] = Number(ad[0].data.csgo_market?.maker);
+        }
+      }
     }
 
     i["data"] = i.data.filter(item => Number(item.price) >0).filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price)
-    // .filter(item =>item.name != null && whitelist.includes(item.name));
+    .filter(item =>item.name != null && whitelist.includes(item.name));
     //TODO concat real data.
   }
   let markets = await getLatestMarketData();
   markets = markets.filter(item => item.seller_fee!=null)
-  // .filter(item =>item.name != null && whitelist.includes(item.name));
+  .filter(item =>item.name != null && whitelist.includes(item.name));
   const announce = await getAnnounce();
   let lastUpdateTime = skins?.length >0 ? skins[0].timestamp : Date.now();
 
@@ -142,6 +152,15 @@ async function index() {
     i['averageSub'] = averageSub;
     i['price'] = totalPrice/i.data?.length;
     i['offers'] = totalOffer/i.data?.length;
+    for(let u of cases)
+    {
+      if(u.id == i.skin)
+      {
+        i['name'] = u['name']
+        i['img_url'] = u['img_url']
+        i['url'] = u['url']
+      }
+    }
   }
 
   for(let i of markets)

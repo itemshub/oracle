@@ -134,7 +134,7 @@ async function index() {
       greatProfit+=1;
     }
     skinsAverageSub+=averageSub
-    if(averageSub>0.25)
+    if(averageSub>0.1)
     {
       topSkinSub.push(
         {

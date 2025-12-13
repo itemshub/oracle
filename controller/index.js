@@ -336,7 +336,8 @@ async function arbi() {
                 from:u,
                 to:y,
                 sub:amm.data[u].maker - amm.data[y].maker,
-                rate : (amm.data[u].maker-amm.data[y].maker)/amm.data[y].maker
+                rate : (amm.data[u].maker-amm.data[y].maker)/amm.data[y].maker,
+                market_rate : (amm.data[u].taker-amm.data[y].maker)/amm.data[y].maker,
               }
             )
           }

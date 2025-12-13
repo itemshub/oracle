@@ -16,6 +16,7 @@ const app = express();
 const PORT = 7749;
 const cases = require("./config/case.json")
 const markets = require("./config/market.json");
+const markets_amm = require("./config/market_amm.json")
 const cors = require('cors');
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -77,6 +78,14 @@ app.get('/index/cn', async function(req, res) {
 });
 app.get('/arbi', async function(req, res) {
   const ret = await arbi();
+  return sendSuccess(res, ret);
+});
+app.get('/amm', async function(req, res) {
+  const ret = await arbi();
+  return sendSuccess(res, ret);
+});
+app.get('/amm/markets', async function(req, res) {
+  const ret = markets_amm;
   return sendSuccess(res, ret);
 });
 

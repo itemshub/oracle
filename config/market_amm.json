@@ -1,0 +1,72 @@
+[
+    {
+        "name": "BUFF163",
+        "market_id":"buff163",
+        "url": "https://csgoskins.gg/markets/buff163",
+        "img_url": "https://res.itemshub.cn/markets/a83480228f225e63ecc63c9d76d86b44.webp",
+        "items": 27100,
+        "offers": 4500000,
+        "value": 131100000,
+        "avg_discount": "28.1%",
+        "visits": 6400000
+    },
+    {
+        "name": "Market.CSGO",
+        "market_id":"csgo_market",
+        "url": "https://csgoskins.gg/markets/marketcsgo",
+        "img_url": "https://res.itemshub.cn/markets/5e965180c254c518a9e9372e97f91873.webp",
+        "items": 22700,
+        "offers": 690800,
+        "value": 17600000,
+        "avg_discount": "20.2%",
+        "visits": 6700000
+    },
+    {
+        "name": "IGXE",
+        "market_id":"igxe",
+        "seller_fee": "1.0%",
+        "buyer_fee": "0%",
+        "founded": "August 17th, 2020",
+        "headquarters": "Hangzhou, China",
+        "monthly_visits": "6.4M",
+        "timestamp": 1765028591661,
+        "img_url": "https://res.itemshub.cn/markets/igxe.jpg",
+        "avg_discount": 18.1,
+        "offers": 450000,
+        "items": 2710,
+        "value": 13110000,
+        "visits": 640000
+    },
+    {
+        "name": "悠悠有品",
+        "market_id":"uuyp",
+        "seller_fee": "1.50%",
+        "buyer_fee": "0%",
+        "founded": "August 17th, 2022",
+        "headquarters": "Hangzhou, China",
+        "monthly_visits": "6.4M",
+        "timestamp": 1765028591661,
+        "img_url": "https://res.itemshub.cn/markets/uuyp.jpg",
+        "avg_discount": 28.1,
+        "offers": 4500000,
+        "items": 27100,
+        "value": 131100000,
+        "visits": 6400000
+    },
+    {
+        "name": "C5",
+        "market_id":"c5",
+        "seller_fee": "2.0%",
+        "buyer_fee": "0%",
+        "founded": "August 17th, 2019",
+        "headquarters": "Hangzhou, China",
+        "monthly_visits": "6.4M",
+        "timestamp": 1765028591661,
+        "img_url": "https://res.itemshub.cn/markets/c5.png",
+        "avg_discount": 28.1,
+        "offers": 4500000,
+        "items": 27100,
+        "value": 131100000,
+        "visits": 6400000
+    }
+]

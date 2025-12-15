@@ -16,6 +16,18 @@ REM ==========================================
 echo.
 echo [%date% %time%] ===== New cycle =====
 
+REM ---------- 清理 chrome_profile ----------
+if exist "%CHROME_PROFILE%" (
+    echo [%date% %time%] Removing %CHROME_PROFILE% ...
+    rmdir /s /q "%CHROME_PROFILE%" >nul 2>&1
+) else (
+    echo [%date% %time%] %CHROME_PROFILE% not found, skip cleanup.
+)
+
+echo [%date% %time%] Waiting 10 seconds after cleanup...
+timeout /t 10 >nul
+REM ------------------------------------------
+
 REM 启动 node（关键：加唯一标识参数）
 start "%RUN_TAG%" /B "%NODE_EXE%" "%NODE_SCRIPT%" --run-tag=%RUN_TAG%
 

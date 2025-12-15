@@ -58,23 +58,9 @@ async function newAccount(data) {
     return safeQuery(async () => {
         const acc = await getAccountByEmail(data.email);
         if (acc.length > 0) return false;
-
+        data.email = data.email.toLowerCase();
         const col = await getCollection(sUser);
         return await col.insertOne(data);
-    });
-}
-
-async function getAccountByAddress(add) {
-    return safeQuery(async () => {
-        const col = await getCollection(sUser);
-        return await col.find({ address: add }).project({ _id: 0 }).toArray();
-    });
-}
-
-async function getAccountByWallet(add) {
-    return safeQuery(async () => {
-        const col = await getCollection(sUser);
-        return await col.find({ wallet: add }).project({ _id: 0, password: 0 }).toArray();
     });
 }
 
@@ -311,7 +297,6 @@ class MongoTable {
 module.exports = {
     connect,
     newAccount,
-    getAccountByAddress,
     getAllAccount,
     verfiToken,
     newAccountToken,
@@ -320,7 +305,6 @@ module.exports = {
     updateEmail,
     verfiPassword,
     updateAddress,
-    getAccountByWallet,
     getAll,
     delAll,
     getAccountToken,

@@ -57,14 +57,21 @@
 //     // console.log(await igxe.price(cases[0]))
 // }
 
+const b58 = require("b58")
+const crypto = require('crypto');
+function md5(str) {
+  return crypto.createHash('md5').update(String(str), 'utf8').digest('hex');
+}
 
 const c5_class = require("./class/c5/index")
 const market_csgo_class = require("./class/market_csgo/index")
 const igxe_class = require("./class/igxe");
 const buff_class = require("./class/buff/index")
 const uupy_class = require("./class/uuyp/index")
+const db = require("./db/db")
 const test = async ()=>
-{
+{ 
+    
 }
 
 test()

@@ -10,6 +10,7 @@ set SLEEP_SECONDS=3600
 
 REM 唯一标识（用于识别进程，防 PID 复用）
 set "RUN_TAG=AMM_MONITOR_WATCHDOG"
+set "CHROME_PROFILE=chrome_profile"
 REM ==========================================
 
 :MAIN_LOOP

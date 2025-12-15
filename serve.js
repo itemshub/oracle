@@ -18,6 +18,8 @@ const cases = require("./config/case.json")
 const markets = require("./config/market.json");
 const markets_amm = require("./config/market_amm.json")
 const cors = require('cors');
+
+const auth = require("./controller/middleware/auth");
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -47,6 +49,9 @@ async function sendErr(res, err) {
     })
 }
 
+/**
+ * Base data interfaces
+ */
 
 app.get('/ping', async function(req, res) {
     return sendSuccess(res)
@@ -55,7 +60,6 @@ app.get('/ping', async function(req, res) {
 app.get('/case', async function(req, res) {
   return sendSuccess(res, cases);
 });
-
 
 app.get('/market/lts', async function(req, res) {
   const datas = await getLatestMarketData();
@@ -72,10 +76,6 @@ app.get('/index', async function(req, res) {
   return sendSuccess(res, ret);
 });
 
-app.get('/index/cn', async function(req, res) {
-  const ret = await cn_index();
-  return sendSuccess(res, ret);
-});
 app.get('/arbi', async function(req, res) {
   const ret = await arbi();
   return sendSuccess(res, ret);
@@ -89,6 +89,12 @@ app.get('/amm/markets', async function(req, res) {
   return sendSuccess(res, ret);
 });
 
+/**
+ * Admin interfaces
+ */
+app.get('/admin/ping', auth.auth, async function(req, res) {
+    return sendSuccess(res, "Admin pong");
+})
 
 app.listen(PORT, () => {
   console.log(`🚀 API RUN NOW: http://localhost:${PORT}`);

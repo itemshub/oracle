@@ -201,19 +201,19 @@ async function verfiToken(token) {
         const ret = await col.find({ t: token }).project({ _id: 0 }).toArray();
 
         if (ret.length > 0) {
-            return await getAccountByEmail(ret[0].a);
+            return await getAccountByEmail(ret[0].u);
         }
 
         return ret;
     });
 }
 
-async function newAccountToken(token, address) {
+async function newAccountToken(token, user) {
     return safeQuery(async () => {
         if ((await verfiToken(token)).length > 0) return false;
 
         const col = await getCollection(sUserToken);
-        return await col.insertOne({ t: token, a: address });
+        return await col.insertOne({ t: token, u: user });
     });
 }
 

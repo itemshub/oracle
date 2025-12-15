@@ -12,7 +12,8 @@
     "mongodb": "^7.0.0",
     "puppeteer-core": "^24.22.3",
     "request": "^2.88.2",
-    "serve-static": "^2.2.0"
+    "serve-static": "^2.2.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "pkg": "^5.8.1"

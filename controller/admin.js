@@ -5,6 +5,7 @@ const igxe_class = require("../class/igxe/index");
 const uupy_class = require("../class/uuyp/index")
 const c5_class = require("../class/c5/index");
 const market_csgo_class = require("../class/market_csgo/index");
+const steam_class = require("../class/steam/index")
 
 const classes = {
     buff163 : buff_class,
@@ -68,6 +69,21 @@ const account_information = async () => {
   }
 };
 
+const account_inventory = async () => {
+  try {
+    const steam = new steam_class(
+        {
+            tradeUrl:(await db.getMinerAuth({type:"steam_url"}))[0]?.data
+        }
+    )
+    const inventory = await steam.getInventory()
+    return inventory;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
 const user_login_email = async(email,password)=>
 {
     const verfi = await db.verfiPassword(String(email).toLowerCase(),password);
@@ -80,5 +96,6 @@ const user_login_email = async(email,password)=>
 }
 module.exports = {
     account_information,
-    user_login_email
+    user_login_email,
+    account_inventory
 }

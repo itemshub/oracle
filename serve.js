@@ -20,7 +20,7 @@ const markets_amm = require("./config/market_amm.json")
 const cors = require('cors');
 
 const auth = require("./controller/middleware/auth");
-const { user_login_email, account_information } = require('./controller/admin');
+const { user_login_email, account_information, account_inventory } = require('./controller/admin');
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -113,6 +113,10 @@ app.post('/admin/login', async function(req, res) {
 
 app.get('/admin/info', auth.auth, async function(req, res) {
     return sendSuccess(res, await account_information());
+})
+
+app.get('/admin/inventory', auth.auth, async function(req, res) {
+    return sendSuccess(res, await account_inventory());
 })
 
 app.listen(PORT, () => {

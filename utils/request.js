@@ -41,18 +41,24 @@ const router = {
         balance:`${base_url.market}/v2/get-money?key=${process.env.MARKET_KEY}`
     }
 }
-async function buff_price(id) {
+async function buff_price(id,cookies) {
     var options = {
         'method': 'GET',
         'url': router.buff.price+id,
+        'headers': {
+            'Cookie': cookies
+        },
     };
     return doRequest(options);
 }
 
-async function buff_buy_order(id) {
+async function buff_buy_order(id,cookies) {
     var options = {
         'method': 'GET',
         'url': router.buff.buy_order+id,
+        'headers': {
+            'Cookie': cookies
+        },
     };
     return doRequest(options);
 }

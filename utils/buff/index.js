@@ -1,9 +1,10 @@
 
 const api =require("../request")
 const cfg = require("../../config/config.json")
+let cookies = {}
 async function taker(cases)
 {
-    const cny_price = await api.buff_buy_order(cases.item_id)
+    const cny_price = await api.buff_buy_order(cases.item_id,cookies)
     if(cny_price.data.items[0])
         {
             return cny_price.data.items[0].price
@@ -13,7 +14,7 @@ async function taker(cases)
 
 async function maker(cases)
 {
-    const cny_price = await api.buff_price(cases.item_id)
+    const cny_price = await api.buff_price(cases.item_id,cookies)
     if(cny_price.data.items[0])
         {
             return cny_price.data.items[0].price
@@ -22,6 +23,7 @@ async function maker(cases)
 }
 
 async function price(cases) {
+  cookies = (await db.getMinerAuth({type:"buff_cookies"}))[0].data
   return {
     taker: (await taker(cases))/cfg.usdtocny,
     maker: (await maker(cases))/cfg.usdtocny

@@ -36,7 +36,7 @@ const requestInjuection = async (page)=>
     if (reqUrl.includes('goods/market/queryOnSaleCommodityList') || reqUrl.includes("purchase/order/getTemplatePurchaseOrderListPC")) {
       const headers = {
         ...request.headers(),
-        cookie: cookie,
+        authorization: cookie,
       };
 
       request.continue({ headers });

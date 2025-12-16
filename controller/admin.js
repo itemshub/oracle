@@ -16,46 +16,57 @@ const classes = {
 const amm_market = require("../config/market_amm.json");
 const auth = require("./middleware/auth");
 
-const account_information = async ()=>
-{
-    try{
-        const cookie = {
-            buff163 : (await db.getMinerAuth({type:"buff_cookies"}))[0]?.data,
-            igxe : (await db.getMinerAuth({type:"igxe_cookies"}))[0]?.data,
-            uuyp : (await db.getMinerAuth({type:"uuyp_cookies"}))[0]?.data,
-            c5 : (await db.getMinerAuth({type:"c5_key"}))[0]?.data,
-            csgo_market : (await db.getMinerAuth({type:"market_csgo_key"}))[0]?.data,
-        }
+const account_information = async () => {
+  try {
+    // 1️⃣ 并行获取所有认证信息
+    const [
+      buff163Res,
+      igxeRes,
+      uuypRes,
+      c5Res,
+      csgoMarketRes
+    ] = await Promise.all([
+      db.getMinerAuth({ type: "buff_cookies" }),
+      db.getMinerAuth({ type: "igxe_cookies" }),
+      db.getMinerAuth({ type: "uuyp_cookies" }),
+      db.getMinerAuth({ type: "c5_key" }),
+      db.getMinerAuth({ type: "market_csgo_key" }),
+    ]);
 
-        let balance = [];
+    const cookie = {
+      buff163: buff163Res?.[0]?.data,
+      igxe: igxeRes?.[0]?.data,
+      uuyp: uuypRes?.[0]?.data,
+      c5: c5Res?.[0]?.data,
+      csgo_market: csgoMarketRes?.[0]?.data,
+    };
 
-        for(let i of amm_market)
-        {
-            const obj = new classes[i.market_id](
-                {
-                    cookie:cookie[i.market_id]
-                }
-            )
-            let bal = await obj.balance();
-            balance.push(
-                {
-                    name:i.name,
-                    market_id:i.market_id,
-                    img_url:i.img_url,
-                    balance:{
-                        raw : bal
-                    }
-                }
-            )
-        }
+    // 2️⃣ 并行获取所有 market balance
+    const balance = await Promise.all(
+      amm_market.map(async (i) => {
+        const obj = new classes[i.market_id]({
+          cookie: cookie[i.market_id],
+        });
 
-        return balance;
-    }catch(e)
-    {
-        console.error(e);
-        return [];
-    }
-}
+        const bal = await obj.balance();
+
+        return {
+          name: i.name,
+          market_id: i.market_id,
+          img_url: i.img_url,
+          balance: {
+            raw: bal,
+          },
+        };
+      })
+    );
+
+    return balance;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
 
 const user_login_email = async(email,password)=>
 {

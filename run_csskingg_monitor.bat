@@ -2,14 +2,12 @@
 setlocal EnableExtensions EnableDelayedExpansion
 
 REM ================== 配置 ==================
-set "NODE_EXE=node"
+set "NODE_EXE=node.exe"
 set "NODE_SCRIPT=monitor\csgo_skin_gg_monitor.js"
 
 set TIMEOUT_SECONDS=3600
 set SLEEP_SECONDS=3600
 
-REM 唯一标识（用于识别进程，防 PID 复用）
-set "RUN_TAG=AMM_MONITOR_WATCHDOG"
 set "CHROME_PROFILE=chrome_profile"
 REM ==========================================
 
@@ -17,49 +15,48 @@ REM ==========================================
 echo.
 echo [%date% %time%] ===== New cycle =====
 
-REM ---------- 清理 chrome_profile ----------
+REM ---------- 1. 先杀 chrome ----------
+echo [%date% %time%] Killing chrome.exe ...
+taskkill /IM chrome.exe /F >nul 2>&1
+
+REM ---------- 2. 清理 chrome_profile ----------
 if exist "%CHROME_PROFILE%" (
     echo [%date% %time%] Removing %CHROME_PROFILE% ...
     rmdir /s /q "%CHROME_PROFILE%" >nul 2>&1
-) else (
-    echo [%date% %time%] %CHROME_PROFILE% not found, skip cleanup.
 )
 
+REM ---------- 3. 等待 10 秒 ----------
 echo [%date% %time%] Waiting 10 seconds after cleanup...
-timeout /t 10 >nul
-REM ------------------------------------------
+timeout /t 10
 
-REM 启动 node（关键：加唯一标识参数）
-start "%RUN_TAG%" /B "%NODE_EXE%" "%NODE_SCRIPT%" --run-tag=%RUN_TAG%
+REM ---------- 4. 启动 node ----------
+echo [%date% %time%] Starting node process...
+start "" /B "%NODE_EXE%" "%NODE_SCRIPT%"
 
-REM 启动时间戳（秒）
-set START_TS=%TIME%
-
+REM ---------- 5. 计时监听 ----------
 set /a ELAPSED=0
 
 :WATCH_LOOP
-REM 查询是否存在该进程（基于窗口标题）
-tasklist /V | findstr /I "%RUN_TAG%" >nul
+REM 检查 node + 脚本 是否仍在运行
+tasklist /V | findstr /I "%NODE_EXE%" | findstr /I "%NODE_SCRIPT%" >nul
 if errorlevel 1 (
-    echo [%date% %time%] Process exited normally.
+    echo [%date% %time%] Node process exited normally.
     goto SLEEP
 )
 
-REM 超时判断
+REM 超时 → kill node
 if !ELAPSED! GEQ %TIMEOUT_SECONDS% (
-    echo [%date% %time%] Timeout reached, killing process
-
-    REM 精确杀死该 watchdog 对应进程
-    taskkill /FI "WINDOWTITLE eq %RUN_TAG%" /F >nul 2>&1
+    echo [%date% %time%] Timeout reached, killing node process...
+    taskkill /IM "%NODE_EXE%" /F >nul 2>&1
     goto SLEEP
 )
 
-timeout /t 1 >nul
+timeout /t 1
 set /a ELAPSED+=1
 goto WATCH_LOOP
 
 
 :SLEEP
-echo [%date% %time%] Sleeping %SLEEP_SECONDS% seconds
-timeout /t %SLEEP_SECONDS% >nul
+echo [%date% %time%] Sleeping %SLEEP_SECONDS% seconds...
+timeout /t %SLEEP_SECONDS%
 goto MAIN_LOOP

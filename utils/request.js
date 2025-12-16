@@ -32,6 +32,7 @@ const router = {
         buy_order:`${base_url.igxe}/purchase/get_product_purchases?product_id=`
     },
     market:{
+        order_usd:`${base_url.market}/v2/prices/orders/USD.json`,
         price_usd:`${base_url.market}/v2/prices/USD.json`,
         buy:`${base_url.market}/v2/buy?key=${process.env.MARKET_KEY}`,
         buy_for:`${base_url.market}/v2/buy-for?key=${process.env.MARKET_KEY}&${process.env.RECIVER_STEAM}`,

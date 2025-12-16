@@ -1,5 +1,6 @@
 const path = require('path');
 const cfg = require("../../config/config.json")
+const db = require("../../db/db")
 //Chrome
 const puppeteer = require("puppeteer-core");
 
@@ -7,7 +8,7 @@ const chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
+let cookie = false;
 let taker_data = {};
 let maker_data = {};
 async function runWithTimeout(fn, ms, urlLabel = "") {
@@ -29,7 +30,20 @@ async function runWithTimeout(fn, ms, urlLabel = "") {
 const requestInjuection = async (page)=>
 {
   await page.setRequestInterception(true);
-  page.on('request', req => req.continue());
+  page.on('request', (request) => {
+    const reqUrl = request.url();
+
+    if (reqUrl.includes('goods/market/queryOnSaleCommodityList') || reqUrl.includes("purchase/order/getTemplatePurchaseOrderListPC")) {
+      const headers = {
+        ...request.headers(),
+        cookie: cookie,
+      };
+
+      request.continue({ headers });
+    } else {
+      request.continue();
+    }
+  });
   page.on('response', async (response) => {
     try {
       const request = response.request();
@@ -153,6 +167,11 @@ async function maker(cases)
 }
 
 async function price(cases) {
+  const c = (await db.getMinerAuth({type:"uuyp_cookies"}))[0]?.data
+  if(c)
+  {
+    cookie = c;
+  }
   return {
     taker: (await taker(cases))/cfg.usdtocny,
     maker: (await maker(cases))/cfg.usdtocny

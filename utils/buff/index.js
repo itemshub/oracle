@@ -1,6 +1,7 @@
 
 const api =require("../request")
 const cfg = require("../../config/config.json")
+const db = require("../../db/db")
 let cookies = {}
 async function taker(cases)
 {

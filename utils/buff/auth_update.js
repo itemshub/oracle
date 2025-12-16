@@ -18,12 +18,12 @@ const requestInjuection = async (page)=>
       try {
         body = await response.text();
       } catch (err) {}
-      if(url.includes("cart/quick_show"))
+      if(url.includes("/asset/get_brief_asset"))
       {
         // console.log(url)
-        // console.log(headers.cookie)
-        await db.updateMinerAuth("igxe_cookies",headers.cookie)
-        console.log("igxe_cookies updated")
+        console.log(headers?.cookie,headers?.Cookie)
+        await db.updateMinerAuth("buff_cookies",headers.cookie)
+        console.log("buff_cookies updated")
       }
     } catch (err) {
     }
@@ -46,14 +46,14 @@ async function auth_update() {
 
   const page = await browser.newPage();
   await requestInjuection(page);
-  await page.goto("https://www.igxe.cn/login/?path=/");
+  await page.goto("https://buff.163.com/account/login?back_url=/user-center/asset/withdraw/");
 
   let startLoop = false;
   page.on("framenavigated", frame => {
     if (frame === page.mainFrame()) {
             const currentUrl = frame.url();
             console.log("URL changed:", currentUrl);
-            if(currentUrl.toLowerCase()=="https://www.igxe.cn/")
+            if(currentUrl.toLowerCase().includes("user-center/asset/withdraw"))
             {
                 console.log("start loop")
                 startLoop=true
@@ -104,6 +104,7 @@ async function auth_update() {
         if(startLoop)
         {
             console.log("开始轮询 localStorage / sessionStorage / cookies...");
+            await sleep(1000)
             const data = await getStorage(page);
             const ls = data.localStorage;
             const ss = data.sessionStorage;
@@ -122,14 +123,14 @@ async function auth_update() {
                 }
             }
 
-            if (emptyLocal || emptySession || emptyCookies || workingCookies) {
+            if (emptyLocal || emptySession || emptyCookies) {
                 // console.log(`[${new Date().toISOString()}] 条件未满足，继续等待...`);
                 continue;
             }else{
                 console.log("\n===== 条件满足！当前数据如下 =====");
                 console.log(JSON.stringify(data, null, 2));
                 //   await tables.pgyAuth.insert({data:JSON.stringify(data, null, 2)})
-                await db.updateMinerAuth("igxe_full",JSON.stringify(data, null, 2))
+                await db.updateMinerAuth("buff_full",JSON.stringify(data, null, 2))
                 console.log("轮询结束。");
                 await sleep(5000)
                 await browser.close();

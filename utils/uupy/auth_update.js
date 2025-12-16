@@ -143,6 +143,7 @@ async function auth_update() {
 
     await sleep(1000);
   }
+  return 0 ;
 }
 
 module.exports = {

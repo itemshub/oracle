@@ -199,7 +199,7 @@ async function newAccountToken(token, user) {
         if ((await verfiToken(token)).length > 0) return false;
 
         const col = await getCollection(sUserToken);
-        return await col.insertOne({ t: token, u: user });
+        return await col.insertOne({ t: token, u: user ,d: Date.now()});
     });
 }
 

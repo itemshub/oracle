@@ -7,9 +7,9 @@ class c5_class {
    * @param {string} options.apiKey - C5GAME OpenAPI 的 app-key
    * @param {string} [options.baseURL] - API 基础域名
    */
-  constructor({ apiKey, baseURL = 'https://openapi.c5game.com' } = {}) {
+  constructor({ cookie, baseURL = 'https://openapi.c5game.com' } = {}) {
     this.config = {
-      apiKey,
+      apiKey:cookie,
       baseURL,
       headers: {
         'Content-Type': 'application/json',

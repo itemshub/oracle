@@ -3,7 +3,7 @@ const db = require("../../db/db")
 async function auth(req, res, next) {
     const token = req.headers.token;
     const authUser = await db.verfiToken(token);
-    if (authUser) {
+    if (authUser && authUser?.length>0) {
         res.locals.auth = authUser;
         next();
     } else {

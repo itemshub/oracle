@@ -20,6 +20,7 @@ const markets_amm = require("./config/market_amm.json")
 const cors = require('cors');
 
 const auth = require("./controller/middleware/auth");
+const { user_login_email, account_information } = require('./controller/admin');
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -27,7 +28,12 @@ app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).send('Server Error');
 });
-
+var logger = require('morgan');
+app.use(logger('dev'));
+logger.token('time', () => new Date().toISOString());
+app.use(
+  logger(':time :method :url :status :res[content-length] - :response-time ms')
+);
 
 async function sendSuccess(res, data) {
     if (!data) {
@@ -94,6 +100,19 @@ app.get('/amm/markets', async function(req, res) {
  */
 app.get('/admin/ping', auth.auth, async function(req, res) {
     return sendSuccess(res, "Admin pong");
+})
+
+app.post('/admin/login', async function(req, res) {
+    const ln = await user_login_email(req.body?.email,req.body?.password)
+    if(ln)
+    {
+      return sendSuccess(res,ln)
+    }
+    return sendErr(res,"Login Failed")
+})
+
+app.get('/admin/info', auth.auth, async function(req, res) {
+    return sendSuccess(res, await account_information());
 })
 
 app.listen(PORT, () => {

@@ -4,9 +4,9 @@ class market_csgo_class {
    * @param {string} options.apiKey - API Key
    * @param {string} options.baseUrl - API 基础 URL
    */
-  constructor({ apiKey = '', baseUrl = 'https://market.csgo.com/api/v2' } = {}) {
+  constructor({ cookie = '', baseUrl = 'https://market.csgo.com/api/v2' } = {}) {
     this.config = {
-      apiKey,
+      apiKey:cookie,
       baseUrl
     };
   }

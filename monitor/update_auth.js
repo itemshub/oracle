@@ -9,3 +9,5 @@ const init = async () =>
     await uuyp_update_auth.auth_update();
     process.exit(0)
 }
+
+init()

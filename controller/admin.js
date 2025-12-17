@@ -70,6 +70,15 @@ const account_information = async () => {
                 raw: bal,
               },
             };
+          }else{
+            return {
+              name: i.name,
+              market_id: i.market_id,
+              img_url: i.img_url,
+              balance: {
+                raw: 0,
+              },
+            };
           }
         }catch(e)
         {

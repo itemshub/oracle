@@ -50,17 +50,17 @@ const account_information = async () => {
           const obj = new classes[i.market_id]({
             cookie: cookie[i.market_id],
           });
+          const bal = await obj.balance();
+          return {
+            name: i.name,
+            market_id: i.market_id,
+            img_url: i.img_url,
+            balance: {
+              raw: bal,
+            },
+          };
         }
-        const bal = await obj.balance();
 
-        return {
-          name: i.name,
-          market_id: i.market_id,
-          img_url: i.img_url,
-          balance: {
-            raw: bal,
-          },
-        };
       })
     );
 

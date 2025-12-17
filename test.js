@@ -67,9 +67,10 @@ const test = async ()=>
     // console.log(
     //     await cs_money.price(cases[0])
     // )
-    console.log(
-        await lis_skin.price(cases[0])
-    )
+    // console.log(
+    //     await lis_skin.price(cases[0])
+    // )
+
 }
 
 // const b58 = require("b58")

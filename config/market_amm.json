@@ -68,5 +68,27 @@
         "items": 27100,
         "value": 131100000,
         "visits": 6400000
+    },
+    {
+        "name": "CSGOBUY",
+        "market_id":"csgo_buy",
+        "url": "https://csgobuy.cn/",
+        "img_url": "https://res.itemshub.cn/markets/5e965180c254c518a9e9372e97f91873.webp",
+        "items": 22700,
+        "offers": 690800,
+        "value": 17600000,
+        "avg_discount": "20.2%",
+        "visits": 6700000
+    },
+    {
+        "name": "CS.MONEY",
+        "market_id":"cs_money",
+        "url": "https://csgoskins.gg/markets/csmoney",
+        "logo_url": "https://res.itemshub.cn/markets/4a5fd0e97cb90990efc1f79e9dd09ffd.webp",
+        "items": 12000,
+        "offers": 497400,
+        "value": 21200000,
+        "avg_discount": "30.1%",
+        "visits": 11500000
     }
 ]

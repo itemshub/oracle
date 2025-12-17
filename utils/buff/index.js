@@ -6,7 +6,7 @@ let cookies = {}
 async function taker(cases)
 {
     const cny_price = await api.buff_buy_order(cases.item_id,cookies)
-    if(cny_price.data.items[0])
+    if(cny_price && cny_price?.data && cny_price.data?.items && cny_price.data.items[0])
         {
             return cny_price.data.items[0].price
         }
@@ -16,7 +16,7 @@ async function taker(cases)
 async function maker(cases)
 {
     const cny_price = await api.buff_price(cases.item_id,cookies)
-    if(cny_price.data.items[0])
+    if(cny_price && cny_price?.data && cny_price.data?.items &&cny_price.data.items[0])
         {
             return cny_price.data.items[0].price
         }

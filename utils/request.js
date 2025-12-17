@@ -20,7 +20,9 @@ require('dotenv').config()
 const base_url ={
     market:"https://market.csgo.com/api",
     buff:"https://buff.163.com/api",
-    igxe:"https://www.igxe.cn"
+    igxe:"https://www.igxe.cn",
+    csgo_buy:"https://csgobuy.cn/api",
+    cs_money:"https://cs.money"
 }
 const router = {
     buff:{
@@ -39,6 +41,20 @@ const router = {
         sell:`${base_url.market}/v2/add-to-sale?key=${process.env.MARKET_KEY}`,
         sell_remove_all:`${base_url.market}/v2/remove-all-from-sale?key=${process.env.MARKET_KEY}`,
         balance:`${base_url.market}/v2/get-money?key=${process.env.MARKET_KEY}`
+    },
+    csgo_buy:{
+        order_usd:`${base_url.csgo_buy}/v2/prices/orders/USD.json`,
+        price_usd:`${base_url.csgo_buy}/v2/prices/USD.json`,
+        order_cny:`${base_url.csgo_buy}/v2/prices/orders/CNY.json`,
+        price_cny:`${base_url.csgo_buy}/v2/prices/CNY.json`,
+        buy:`${base_url.csgo_buy}/v2/buy?key=${process.env.MARKET_KEY}`,
+        buy_for:`${base_url.csgo_buy}/v2/buy-for?key=${process.env.MARKET_KEY}&${process.env.RECIVER_STEAM}`,
+        sell:`${base_url.csgo_buy}/v2/add-to-sale?key=${process.env.MARKET_KEY}`,
+        sell_remove_all:`${base_url.csgo_buy}/v2/remove-all-from-sale?key=${process.env.MARKET_KEY}`,
+        balance:`${base_url.csgo_buy}/v2/get-money?key=${process.env.MARKET_KEY}`
+    },
+    cs_money:{
+        price:`${base_url.cs_money}/2.0/market/sell-orders?limit=60&offset=0&name=`,
     }
 }
 async function buff_price(id,cookies) {
@@ -138,6 +154,33 @@ async function market_balance(name,price)
     return doRequest(options);
 }
 
+async function csgo_buy_price_cny() {
+    var options = {
+        'method': 'GET',
+        'url': router.csgo_buy.price_cny,
+    };
+    return doRequest(options);
+}
+
+async function csgo_buy_order_cny() {
+    var options = {
+        'method': 'GET',
+        'url': router.csgo_buy.order_cny,
+    };
+    return doRequest(options);
+}
+
+async function cs_money_price(name) {
+    var options = {
+        'method': 'GET',
+        "redirect": "follow",
+        'url': encodeURI(router.cs_money.price+name),
+    };
+    console.log(options)
+    return doRequest(options);
+}
+
+
 async function getIP()
 {
     var options = {
@@ -165,4 +208,9 @@ module.exports = {
     //IGXE interfaces :
     igxe_price,
     igxe_buy_order,
+
+    //CSGO BUY
+    csgo_buy_price_cny,
+    csgo_buy_order_cny,
+    cs_money_price
 }

@@ -3,6 +3,7 @@ const cfg = require("../../config/config.json")
 const db = require("../../db/db")
 //Chrome
 const puppeteer = require("puppeteer-core");
+const { delChromeProfile } = require('../utils');
 
 const chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 function sleep(ms) {
@@ -151,6 +152,7 @@ async function maker(cases)
 }
 
 async function price(cases) {
+  await delChromeProfile()
   return {
     taker: 0,//(await taker(cases))/cfg.usdtocny,
     maker: (await maker(cases))

@@ -5,8 +5,8 @@ REM ================== 配置 ==================
 set "NODE_EXE=node.exe"
 set "NODE_SCRIPT=monitor\amm_monitor.js"
 
-set TIMEOUT_SECONDS=3600
-set SLEEP_SECONDS=3600
+set TIMEOUT_SECONDS=7200
+set SLEEP_SECONDS=7200
 
 set "CHROME_PROFILE=chrome_profile"
 REM ==========================================
@@ -24,6 +24,8 @@ if exist "%CHROME_PROFILE%" (
     echo [%date% %time%] Removing %CHROME_PROFILE% ...
     rmdir /s /q "%CHROME_PROFILE%" >nul 2>&1
 )
+
+mkdir "%CHROME_PROFILE%"
 
 REM ---------- 3. 等待 10 秒 ----------
 echo [%date% %time%] Waiting 10 seconds after cleanup...

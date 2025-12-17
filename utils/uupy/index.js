@@ -3,6 +3,7 @@ const cfg = require("../../config/config.json")
 const db = require("../../db/db")
 //Chrome
 const puppeteer = require("puppeteer-core");
+const { delChromeProfile } = require('../utils');
 
 const chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 function sleep(ms) {
@@ -140,6 +141,7 @@ const getData  =async (batchId,url) => {
 
 async function fetchData(url) {
     await getData(0,url);
+    return 0;
 }
 
 async function taker(cases)
@@ -172,6 +174,7 @@ async function price(cases) {
   {
     cookie = c;
   }
+  await delChromeProfile()
   return {
     taker: (await taker(cases))/cfg.usdtocny,
     maker: (await maker(cases))/cfg.usdtocny

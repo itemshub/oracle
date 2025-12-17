@@ -10,6 +10,7 @@ const tables = {
 };
 const cases = require("../config/case.json")
 const markets = require("../config/market.json");
+const { delChromeProfile } = require('./utils');
 
 const chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 function sleep(ms) {
@@ -62,6 +63,7 @@ async function fetchMarketData() {
 let finalDataMarket = {}
 const marketData  =async (batchId,url) => {
   finalDataMarket = {};
+  await delChromeProfile()
   const browser = await puppeteer.launch({
     executablePath: chromePath,          // 真实 Chrome 路径
     headless: false,                     // 非 headless
@@ -209,6 +211,7 @@ async function fetchSkinData() {
 let finalDataCases = {}
 const casesData  =async (batchId,skin,url) => {
   finalDataCases = {};
+  await delChromeProfile();
   const browser = await puppeteer.launch({
     executablePath: chromePath,          // 真实 Chrome 路径
     headless: false,                     // 非 headless

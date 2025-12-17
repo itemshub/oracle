@@ -41,9 +41,9 @@ const loop = async()=>
                             buff163:await buff.price(i),
                             igxe:await igxe.price(i),
                             csgo_market:await csgo_market.price(i),
+                            csgo_buy : await csgo_buy.price(i),
                             uuyp:await uuyp.price(i),
                             c5:await c5.price(i),
-                            csgo_buy : await csgo_buy.price(i),
                             cs_money : await cs_money.price(i)
                         }
                     }

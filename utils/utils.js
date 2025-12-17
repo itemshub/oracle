@@ -1,5 +1,6 @@
 const fs = require('fs/promises');
 const path = require('path');
+const { exec } = require('child_process');
 async function delChromeProfile() {
   // 1️⃣ 杀 chrome 进程（忽略错误与输出）
   await new Promise((resolve) => {

@@ -60,7 +60,6 @@ const account_information = async () => {
             },
           };
         }
-
       })
     );
 

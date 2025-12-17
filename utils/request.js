@@ -22,7 +22,8 @@ const base_url ={
     buff:"https://buff.163.com/api",
     igxe:"https://www.igxe.cn",
     csgo_buy:"https://csgobuy.cn/api",
-    cs_money:"https://cs.money"
+    cs_money:"https://cs.money",
+    lis_skin:"https://api.lis-skins.com"
 }
 const router = {
     buff:{
@@ -55,6 +56,9 @@ const router = {
     },
     cs_money:{
         price:`${base_url.cs_money}/2.0/market/sell-orders?limit=60&offset=0&name=`,
+    },
+    lis_skin:{
+        price:`${base_url.lis_skin}/v1/market/search?game=csgo&names%5B%5D=`,
     }
 }
 async function buff_price(id,cookies) {
@@ -176,7 +180,19 @@ async function cs_money_price(name) {
         "redirect": "follow",
         'url': encodeURI(router.cs_money.price+name),
     };
-    console.log(options)
+    // console.log(options)
+    return doRequest(options);
+}
+async function lis_skin_price(name,token) {
+    var options = {
+        'method': 'GET',
+        "redirect": "follow",
+        'url': router.lis_skin.price+name,
+        'headers': {
+                'Authorization': `Bearer ${token}`
+        },
+    };
+    // console.log(options)
     return doRequest(options);
 }
 
@@ -212,5 +228,6 @@ module.exports = {
     //CSGO BUY
     csgo_buy_price_cny,
     csgo_buy_order_cny,
-    cs_money_price
+    cs_money_price,
+    lis_skin_price
 }

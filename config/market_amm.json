@@ -90,5 +90,16 @@
         "value": 21200000,
         "avg_discount": "30.1%",
         "visits": 11500000
+    },
+    {
+        "name": "LIS-SKINS",
+        "market_id":"lis_skin",
+        "url": "https://csgoskins.gg/markets/lis-skins",
+        "logo_url": "https://res.itemshub.cn/markets/bd82ff47b07665184f22ef65f9d2fcd1.webp",
+        "items": 17800,
+        "offers": 1200000,
+        "value": 39300000,
+        "avg_discount": "23.9%",
+        "visits": 17800000
     }
 ]

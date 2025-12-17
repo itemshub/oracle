@@ -15,6 +15,7 @@ const uuyp = require("./utils/uupy/index")
 const igxe = require("./utils/igxe/index")
 const csgo_buy = require("./utils/csgo_buy/index")
 const cs_money = require("./utils/cs_money/index")
+const lis_skin = require("./utils/lis_skin/index")
 
 const uuyp_update_auth = require("./utils/uupy/auth_update")
 const buff_update_auth = require("./utils/buff/auth_update")
@@ -63,10 +64,12 @@ const test = async ()=>
 
     // await uuyp_update_auth.auth_update()
     // await buff_update_auth.auth_update()
+    // console.log(
+    //     await cs_money.price(cases[0])
+    // )
     console.log(
-        await cs_money.price(cases[0])
+        await lis_skin.price(cases[0])
     )
-    
 }
 
 // const b58 = require("b58")

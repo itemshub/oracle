@@ -45,10 +45,12 @@ const account_information = async () => {
     // 2️⃣ 并行获取所有 market balance
     const balance = await Promise.all(
       amm_market.map(async (i) => {
-        const obj = new classes[i.market_id]({
-          cookie: cookie[i.market_id],
-        });
-
+        if(classes?.[i.market_id])
+        {
+          const obj = new classes[i.market_id]({
+            cookie: cookie[i.market_id],
+          });
+        }
         const bal = await obj.balance();
 
         return {

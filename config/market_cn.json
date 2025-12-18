@@ -49,5 +49,16 @@
         "items": 27100,
         "value": 131100000,
         "visits": 6400000
+    },
+    {
+        "name": "CSGOBUY",
+        "market_id":"csgo_buy",
+        "url": "https://csgobuy.cn/",
+        "img_url": "https://res.itemshub.cn/markets/5e965180c254c518a9e9372e97f91873.webp",
+        "items": 22700,
+        "offers": 690800,
+        "value": 17600000,
+        "avg_discount": "20.2%",
+        "visits": 6700000
     }
 ]

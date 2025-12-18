@@ -57,7 +57,10 @@ async function index() {
     "悠悠有品",
     "C5",
     "Steam",
-    "Market.CSGO"
+    "Market.CSGO",
+    "CSGOBUY",
+    "LIS-SKINS",
+    "CS.MONEY"
   ]
 
   for(let i of skins)
@@ -81,6 +84,10 @@ async function index() {
         if(u.name == "C5")
         {
           m['price'] = Number(ad[0].data.c5?.maker);
+        }
+        if(u.name == "CSGOBUY")
+        {
+          m['price'] = Number(ad[0].data.csgo_buy?.maker);
         }
       }else{
          m['price'] = 0;
@@ -107,6 +114,21 @@ async function index() {
           u['price'] = Number(ad[0].data.csgo_market?.maker);
         }
       }
+
+        if(u.name == "LIS-SKINS")
+        {
+          if(ad?.length > 0 && ad[0].data )
+          {
+            u['price'] = Number(ad[0].data.lis_skin?.maker);
+          }
+        }
+        if(u.name == "CS.MONEY")
+        {
+          if(ad?.length > 0 && ad[0].data )
+          {
+            u['price'] = Number(ad[0].data.cs_money?.maker);
+          }
+        }
     }
 
     i["data"] = i.data.filter(item => Number(item.price) >0).filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price)

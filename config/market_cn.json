@@ -52,6 +52,11 @@
     },
     {
         "name": "CSGOBUY",
+        "seller_fee": "2.0%",
+        "buyer_fee": "0%",
+        "founded": "August 17th, 2019",
+        "headquarters": "Hangzhou, China",
+        "monthly_visits": "6.4M",
         "market_id":"csgo_buy",
         "url": "https://csgobuy.cn/",
         "img_url": "https://res.itemshub.cn/markets/5e965180c254c518a9e9372e97f91873.webp",

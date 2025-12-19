@@ -192,7 +192,7 @@ class csgo_buy_class {
   {
     try{
         const bal = await this.getMoney();
-        return Number(bal.money); //Value in USD
+        return Number(bal.money)/7; //Value in USD
     }catch(e)
     {
         console.error(e)

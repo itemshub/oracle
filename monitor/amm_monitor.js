@@ -46,7 +46,7 @@ const loop = async()=>
                             lis_skin : await lis_skin.price(i),
                             uuyp:await uuyp.price(i),
                             c5:await c5.price(i),
-                            cs_money : await cs_money.price(i)
+                            // cs_money : await cs_money.price(i)
                         }
                     }
                     await tables.amm.insert(amm)

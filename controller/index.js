@@ -115,20 +115,20 @@ async function index() {
         }
       }
 
-        if(u.name == "LIS-SKINS")
+      if(u.name == "LIS-SKINS")
+      {
+        if(ad?.length > 0 && ad[0].data )
         {
-          if(ad?.length > 0 && ad[0].data )
-          {
-            u['price'] = Number(ad[0].data.lis_skin?.maker);
-          }
+          u['price'] = Number(ad[0].data.lis_skin?.maker);
         }
-        if(u.name == "CS.MONEY")
+      }
+      if(u.name == "CS.MONEY")
+      {
+        if(ad?.length > 0 && ad[0].data )
         {
-          if(ad?.length > 0 && ad[0].data )
-          {
-            u['price'] = Number(ad[0].data.cs_money?.maker);
-          }
+          u['price'] = Number(ad[0].data.cs_money?.maker);
         }
+      }
     }
 
     i["data"] = i.data.filter(item => Number(item.price) >0).filter(item => item.active_offers >= 500).filter(item => item.name.toLowerCase() !== "steam").sort((a, b) => a.price - b.price)

@@ -11,6 +11,7 @@ const igxe = require("../utils/igxe/index")
 const csgo_buy = require("../utils/csgo_buy/index")
 const cs_money = require("../utils/cs_money/index")
 const lis_skin = require("../utils/lis_skin/index")
+const exeskins = require("../utils/exeskins/index")
 
 const { MongoTable } = require('../db/db');
 const tables = {
@@ -46,6 +47,7 @@ const loop = async()=>
                             lis_skin : await lis_skin.price(i),
                             uuyp:await uuyp.price(i),
                             c5:await c5.price(i),
+                            exeskins:await exeskins.price(i)
                             // cs_money : await cs_money.price(i)
                         }
                     }

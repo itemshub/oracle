@@ -17,9 +17,12 @@ const csgo_buy = require("./utils/csgo_buy/index")
 const cs_money = require("./utils/cs_money/index")
 const lis_skin = require("./utils/lis_skin/index")
 const skin_vault = require("./utils/skin_vault/index")
+const exeskins = require("./utils/exeskins/index")
 
 const uuyp_update_auth = require("./utils/uupy/auth_update")
 const buff_update_auth = require("./utils/buff/auth_update")
+
+const { request_analyze } = require("./chrome_script/request_analizer")
 const test = async ()=>
 {
     // await csskin_gg.fetchSkinData()
@@ -72,8 +75,15 @@ const test = async ()=>
     //     await lis_skin.price(cases[0])
     // )
 
+    // console.log(
+    //     await skin_vault.price(cases[0])
+    // )
+
+    // await request_analyze("https://exeskins.com/?search=glove+case&sortBy=price&direction=asc")
+
+
     console.log(
-        await skin_vault.price(cases[0])
+        await exeskins.price(cases[0])
     )
 }
 

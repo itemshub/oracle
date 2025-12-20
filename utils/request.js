@@ -23,7 +23,8 @@ const base_url ={
     igxe:"https://www.igxe.cn",
     csgo_buy:"https://csgobuy.cn/api",
     cs_money:"https://cs.money",
-    lis_skin:"https://api.lis-skins.com"
+    lis_skin:"https://api.lis-skins.com",
+    skin_vault:"https://api.skinvault.gg"
 }
 const router = {
     buff:{
@@ -59,6 +60,9 @@ const router = {
     },
     lis_skin:{
         price:`${base_url.lis_skin}/v1/market/search?game=csgo&names%5B%5D=`,
+    },
+    skin_vault:{
+        price:`${base_url.skin_vault}/trading/get_all_items`
     }
 }
 async function buff_price(id,cookies) {
@@ -196,7 +200,28 @@ async function lis_skin_price(name,token) {
     return doRequest(options);
 }
 
-
+async function skin_vault_market_price() {
+    var options = {
+        'method': 'POST',
+        'url': router.skin_vault.price,
+        'headers': {
+            'Content-Type': 'application/json'
+        },
+        "body":JSON.stringify(
+            {
+                "site": "bot",
+                "sort": "asc",
+                "page": 0,
+                "currency": "USD",
+                "name": "case",
+                "category": [
+                    "Container"
+                ]
+            }
+        )
+    };
+    return doRequest(options);
+}
 async function getIP()
 {
     var options = {
@@ -229,5 +254,8 @@ module.exports = {
     csgo_buy_price_cny,
     csgo_buy_order_cny,
     cs_money_price,
-    lis_skin_price
+    lis_skin_price,
+
+    //Skinvault
+    skin_vault_market_price
 }

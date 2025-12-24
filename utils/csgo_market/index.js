@@ -28,7 +28,7 @@ async function maker(cases)
 
 async function price(cases) {
   return {
-    taker: await taker(cases),
+    taker: 0,// await taker(cases),
     maker: await maker(cases)
   }
 }

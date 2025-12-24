@@ -75,9 +75,9 @@ const test = async ()=>
     //     await lis_skin.price(cases[0])
     // )
 
-    console.log(
-        await skin_vault.price(cases[0])
-    )
+    // console.log(
+    //     await skin_vault.price(cases[0])
+    // )
 
     // await request_analyze("https://exeskins.com/?search=glove+case&sortBy=price&direction=asc")
 

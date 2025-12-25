@@ -8,7 +8,7 @@ async function getCS2InventoryFromTradeOffer(tradeOfferUrl) {
 
   // SteamID3(accountid) → SteamID64
   const steamId64 = (
-    BigInt(partner) + BigInt('76561197960265728')
+    BigInt(partner) + BigInt('76561198168560111')
   ).toString();
 
   // 1️⃣ 初始化会话（非常关键）

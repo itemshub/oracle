@@ -22,6 +22,9 @@ const exeskins = require("./utils/exeskins/index")
 const uuyp_update_auth = require("./utils/uupy/auth_update")
 const buff_update_auth = require("./utils/buff/auth_update")
 
+
+const steam_class = require("./class/steam/index")
+
 const { request_analyze } = require("./chrome_script/request_analizer")
 const test = async ()=>
 {
@@ -85,6 +88,14 @@ const test = async ()=>
     // console.log(
     //     await exeskins.price(cases[0])
     // )
+
+    const steam = new steam_class(
+        {
+            tradeUrl:(await db.getMinerAuth({type:"steam_url"}))[0]?.data
+        }
+    )
+    const inventory = await steam.getInventory()
+    console.log(inventory)
 }
 
 // const b58 = require("b58")

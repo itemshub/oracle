@@ -24,6 +24,7 @@ const buff_update_auth = require("./utils/buff/auth_update")
 
 
 const steam_class = require("./class/steam/index")
+const market_class = require("./class/market_csgo/index")
 
 const { request_analyze } = require("./chrome_script/request_analizer")
 const test = async ()=>
@@ -89,13 +90,38 @@ const test = async ()=>
     //     await exeskins.price(cases[0])
     // )
 
-    const steam = new steam_class(
+    // const steam = new steam_class(
+    //     {
+    //         tradeUrl:(await db.getMinerAuth({type:"steam_url"}))[0]?.data
+    //     }
+    // )
+    // const inventory = await steam.getInventory()
+    // console.log(inventory)
+
+    const market = new market_class(
         {
-            tradeUrl:(await db.getMinerAuth({type:"steam_url"}))[0]?.data
+            cookie:(await db.getMinerAuth({type:"market_csgo_key"}))[0]?.data
         }
     )
-    const inventory = await steam.getInventory()
-    console.log(inventory)
+    const history = await market.getHistory()
+    // console.log(JSON.stringify(history))
+    let recently = [];
+    let timer = Date.now();
+    let final = 0 ;
+    // console.log(JSON.stringify(history.data))
+    for(let i of history.data)
+    {
+        if(
+             i.stage =="1"||
+            // Number(i.time)*1000 > timer-86400000 && 
+            i.stage =="2")
+        {
+            recently.push(i)
+            final+= Number(i.paid)/1000;
+        }
+    }
+    final = final*20*6.9/24
+    console.log(recently,recently.length,final)
 }
 
 // const b58 = require("b58")

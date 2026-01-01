@@ -169,7 +169,10 @@ class market_csgo_class {
   /* ----------------- History ----------------- */
 
   async getHistory() {
-    return this.request('history');
+    return this.request('history',{
+      date:((Date.now()-3600000*24*14)/1000).toFixed(0),
+      date_end:(Date.now()/1000).toFixed(0)
+    });
   }
 
   async getSalesHistoryByHash(list_hash_name = []) {

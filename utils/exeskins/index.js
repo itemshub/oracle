@@ -113,7 +113,7 @@ async function taker(cases)
 async function maker(cases)
 {
     maker_data = {};
-    await fetchData(`https://exeskins.com/?search=${cases.name}&sortBy=price&direction=asc`)
+    await fetchData(`https://exeskins.com/?search=${cases.name}&sortBy=price&direction=asc&typeSlug=container`)
     if(maker_data && maker_data?.length > 0)
     {
       return maker_data[0]?.price ? maker_data[0]?.price : 0
